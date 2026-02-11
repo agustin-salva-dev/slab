@@ -1,18 +1,5 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
-import localFont from "next/font/local";
-import "./globals.css";
-
-const inter = Inter({
-  subsets: ["latin"],
-  weight: ["200", "400", "700"],
-  variable: "--font-inter",
-});
-
-const neuePower = localFont({
-  src: "./fonts/NeuePower-Ultra.woff2",
-  variable: "--font-neue-power",
-});
+import { inter, neuePower } from "@/lib/fonts";
 
 export const metadata: Metadata = {
   title: "Slab - Short Urls",
