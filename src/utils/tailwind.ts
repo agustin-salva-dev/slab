@@ -17,4 +17,4 @@ export function cn(...inputs: ClassValue[]) {
     return twMerge(clsx(inputs));
 }
 
-export const tv = createTV({ twMerge: true, twMergeConfig: { classGroups } });
+export const tv = createTV({ twMerge: true, twMergeConfig: { extend: { classGroups } } });

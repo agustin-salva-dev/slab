@@ -48,7 +48,7 @@ const buttonVariants = tv({
         {
             size: "xs",
             subject: ["text", "text-icon", "icon-text"],
-            className: "rounded-1-5 text-3.5 h-8 gap-x-1 px-3 [&_svg]:size-3",
+            className: "rounded-1-5 text-3 h-8 gap-x-1 px-3.5 [&_svg]:size-3",
         },
         {
             size: "sm",
@@ -108,7 +108,7 @@ const buttonVariants = tv({
         {
             size: "xs",
             subject: "icon",
-            className: "rounded-1.5 size-8 [&_svg]:size-4",
+            className: "rounded-1-5 size-7 [&_svg]:size-4",
         },
         {
             size: "sm",
@@ -131,7 +131,8 @@ const buttonVariants = tv({
         size: "md",
         subject: "text",
     },
-});
+},);
+
 
 export interface ButtonProps
     extends React.ComponentProps<"button">,
