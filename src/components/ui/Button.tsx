@@ -5,18 +5,18 @@ import { cn, tv } from "@/utils/tailwind";
 
 const buttonVariants = tv({
     base: [
-        "relative inline-flex items-center justify-center font-medium whitespace-nowrap transition-colors",
+        "relative inline-flex items-center justify-center whitespace-nowrap transition-colors",
         "focus-visible:ring-ring focus-visible:ring-1 focus-visible:outline-hidden",
         "disabled:pointer-events-none disabled:opacity-50",
         "[&_svg]:pointer-events-none [&_svg]:shrink-0",
-        "transition duration-250 hover:scale-95",
+        "transition-all duration-200 hover-shrink",
     ],
     variants: {
         variant: {
             primary: "bg-primary text-primary-foreground hover:bg-primary/90",
             secondary: "bg-my-secondary text-secondary-foreground hover:bg-my-hover",
             outline:
-                "border-input bg-background hover:bg-my-hover hover:text-accent-foreground border hover:border-my-hover",
+                "border-input bg-background hover:bg-my-hover border hover:border-my-hover",
             ghost: "hover:bg-accent hover:text-accent-foreground",
             link: "text-primary underline-offset-4 hover:underline",
             destructive:

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { inter, neuePower } from "@/lib/fonts";
 import Navbar from "@/components/layout/Navbar";
+import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
   title: "Slab - Short Urls",
@@ -19,6 +20,7 @@ export default function RootLayout({
       >
         <Navbar />
         {children}
+        <Footer />
       </body>
     </html>
   );

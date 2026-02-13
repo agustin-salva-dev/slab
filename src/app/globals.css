@@ -193,6 +193,8 @@
   --color-my-hover: #3d3d3d;
 
   --color-my-accents-green: #34c759;
+  --color-my-accents-red: #ff383c;
+  --color-my-accents-yellow: #ff9d00;
 }
 
 @layer base {
@@ -293,22 +295,64 @@
     --chart-4: 280 65% 60%;
     --chart-5: 160 60% 45%;
   }
-
   * {
     @apply border-border;
   }
 
   body {
+    font-family: var(--font-inter);
+    font-weight: 400;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
   }
+  button {
+    font-weight: 400;
+  }
 }
 @layer components {
+  /* Hover Transitions */
   .my-hover-transition {
     @apply transition-transform duration-250 hover:scale-115;
   }
+  .my-hover-transition-sm {
+    @apply transition-transform duration-200 hover:scale-104;
+  }
   .-my-hover-transition {
     @apply transition-transform duration-250 hover:scale-95;
+  }
+
+  @layer components {
+    /* --- TRANSICIONES --- */
+
+    /* Escalas y movimientos */
+    .t-transform {
+      @apply transition-transform duration-250 ease-out;
+    }
+
+    /* Colores */
+    .t-color {
+      @apply transition-colors duration-200;
+    }
+
+    /* --- COMPORTAMIENTOS ESPECÍFICOS --- */
+
+    /* Escala hacia arriba (Hover normal O grupo) */
+    .hover-grow:hover,
+    .group:hover .group-grow {
+      @apply scale-115;
+    }
+
+    /* Escala hacia abajo (Hover normal O grupo) */
+    .hover-shrink:hover,
+    .group:hover .group-shrink {
+      @apply scale-95;
+    }
+
+    /* Cambio de color a blanco */
+    .hover-white:hover,
+    .group:hover .group-white {
+      @apply text-white;
+    }
   }
 }
