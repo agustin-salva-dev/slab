@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { inter, neuePower } from "@/lib/fonts";
+import Navbar from "@/components/layout/Navbar";
 
 export const metadata: Metadata = {
   title: "Slab - Short Urls",
@@ -12,10 +13,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" className="dark" style={{ colorScheme: 'dark' }}>
       <body
         className={`${inter.variable} ${neuePower.variable} font-sans antialiased`}
       >
+        <Navbar />
         {children}
       </body>
     </html>
