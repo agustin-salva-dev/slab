@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Image from "next/image";
 import { inter, neuePower } from "@/lib/fonts";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
@@ -18,6 +19,20 @@ export default function RootLayout({
       <body
         className={`${inter.variable} ${neuePower.variable} font-sans antialiased`}
       >
+        <Image
+          src="/slab-hero-bg.webp"
+          alt="Abstract black and white background"
+          fill
+          priority
+          className="hidden md:block blur-sm opacity-55 -z-10"
+        />
+        <Image
+          src="/slab-mobile-hero-bg.webp"
+          alt="Abstract black and white background in mobile dimensions"
+          fill
+          priority
+          className="block md:hidden blur-sm opacity-55 -z-10"
+        />
         <Navbar />
         {children}
         <Footer />
