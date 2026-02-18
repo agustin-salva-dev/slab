@@ -1,3 +1,6 @@
+"use client";
+
+import { authClient } from "@/lib/auth-client";
 import Image from "next/image";
 import {
     Card,
@@ -8,6 +11,19 @@ import {
 } from "@/components/ui/Card";
 import { Button } from "@/components/ui/Button";
 import { GitHub, Google } from "@/components/icons/BrandIcons";
+
+type SocialProvider = "google" | "github";
+
+const handleSocialLogin = async (provider: SocialProvider) => {
+    try {
+        await authClient.signIn.social({
+            provider,
+            callbackURL: "/dashboard"
+        });
+    } catch (error) {
+        console.error(`Error logging in with ${provider}:`, error);
+    }
+};
 
 export function LoginCard() {
     return (
@@ -23,6 +39,7 @@ export function LoginCard() {
                     subject="icon-text"
                     size="sm"
                     className="flex cursor-pointer w-full gap-2! md:gap-3!"
+                    onClick={() => handleSocialLogin("google")}
                 >
                     <Google className="size-4.5!" />
                     Continue with Google
@@ -32,6 +49,7 @@ export function LoginCard() {
                     subject="icon-text"
                     size="sm"
                     className="flex cursor-pointer w-full gap-2! md:gap-3!"
+                    onClick={() => handleSocialLogin("github")}
                 >
                     <GitHub className="size-4.5!" />
                     Continue with Github

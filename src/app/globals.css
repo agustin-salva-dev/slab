@@ -308,48 +308,55 @@
   }
 }
 @layer components {
-  /* Hover Transitions */
-  .my-hover-transition {
-    @apply transition-transform duration-250 hover:scale-115;
-  }
-  .my-hover-transition-sm {
-    @apply transition-transform duration-200 hover:scale-104;
-  }
-  .-my-hover-transition {
-    @apply transition-transform duration-250 hover:scale-95;
+  .font-power-light {
+    font-family: var(--font-neue-power);
+    font-weight: 300;
   }
 
-  @layer components {
-    /* --- TRANSICIONES --- */
+  .font-power-reg {
+    font-family: var(--font-neue-power);
+    font-weight: 400;
+  }
 
-    /* Escalas y movimientos */
-    .t-transform {
-      @apply transition-transform duration-250 ease-out;
-    }
+  .font-power-med {
+    font-family: var(--font-neue-power);
+    font-weight: 500;
+  }
 
-    /* Colores */
-    .t-color {
-      @apply transition-colors duration-200;
-    }
+  .font-power-ultra {
+    font-family: var(--font-neue-power);
+    font-weight: 900;
+  }
 
-    /* --- COMPORTAMIENTOS ESPECÍFICOS --- */
+  /* --- TRANSICIONES --- */
 
-    /* Escala hacia arriba (Hover normal O grupo) */
-    .hover-grow:hover,
-    .group:hover .group-grow {
-      @apply scale-115;
-    }
+  /* Escalas y movimientos */
+  .t-transform {
+    @apply transition-transform duration-250 ease-out;
+  }
 
-    /* Escala hacia abajo (Hover normal O grupo) */
-    .hover-shrink:hover,
-    .group:hover .group-shrink {
-      @apply scale-95;
-    }
+  /* Colores */
+  .t-color {
+    @apply transition-colors duration-200;
+  }
 
-    /* Cambio de color a blanco */
-    .hover-white:hover,
-    .group:hover .group-white {
-      @apply text-white;
-    }
+  /* --- COMPORTAMIENTOS ESPECÍFICOS --- */
+
+  /* Escala hacia arriba (Hover normal O grupo) */
+  .hover-grow:hover,
+  .group:hover .group-grow {
+    @apply scale-115;
+  }
+
+  /* Escala hacia abajo (Hover normal O grupo) */
+  .hover-shrink:hover,
+  .group:hover .group-shrink {
+    @apply scale-95;
+  }
+
+  /* Cambio de color a blanco */
+  .hover-white:hover,
+  .group:hover .group-white {
+    @apply text-white;
   }
 }
