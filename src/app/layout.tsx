@@ -5,8 +5,12 @@ import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 
 export const metadata: Metadata = {
-  title: "Slab - Short Urls",
-  description: "orgotten links into powerful assets. Create clean URLs that are safe to click, easy to remember, and impossible to ignore. We provide the tools to build your presence with confidence.",
+  title: "Slab — All your links in one place.",
+  description: "Forgotten links into powerful assets. Create clean URLs that are safe to click, easy to remember, and impossible to ignore. We provide the tools to build your presence with confidence.",
+  icons: {
+    icon: "/icon.png",
+    apple: "/icon.png",
+  },
 };
 
 export default function RootLayout({
@@ -17,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark" style={{ colorScheme: 'dark' }}>
       <body
-        className={`${inter.variable} ${neuePower.variable} font-sans antialiased`}
+        className={`${inter.variable} ${neuePower.variable}`}
       >
         <Image
           src="/slab-hero-bg.webp"
@@ -34,7 +38,9 @@ export default function RootLayout({
           className="block md:hidden blur-sm opacity-55 -z-10"
         />
         <Navbar />
-        {children}
+        <main className="main-content px-6 md:px-32">
+          {children}
+        </main>
         <Footer />
       </body>
     </html>
