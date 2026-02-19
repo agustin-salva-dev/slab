@@ -26,7 +26,7 @@ export default function Footer() {
                     <p>Status <span className="font-normal text-my-secondary">: In Development</span></p>
                 </div>
                 <Separator orientation="vertical" className="h-5" />
-                <p>v0.1.0</p>
+                <p>v0.4.0</p>
             </section>
         </footer>
     )
