@@ -5,7 +5,7 @@ import { ChevronRight, StarHalf, Ellipsis } from "lucide-react";
 
 export default function Navbar() {
     return (
-        <nav className="w-full flex flex-row fixed z-10 px-6 md:px-32 py-5 text-sm items-center justify-between backdrop-blur-lg border-b border-my-border-secondary bg-white/1">
+        <nav className="w-full flex flex-row fixed z-10 h-18 px-6 md:px-32 text-sm items-center justify-between backdrop-blur-lg border-b border-my-border-secondary bg-white/1">
             <div className="flex flex-row items-center font-extralight gap-5 text-xs text-white cursor-pointer group size-6 md:size-7">
                 <Image src="/logo.webp" alt="Slab Logo" width={28} height={28} />
                 <Image
@@ -17,9 +17,9 @@ export default function Navbar() {
             </div>
             <div className="hidden md:flex flex-row items-center absolute left-1/2 -translate-x-1/2">
                 <StarHalf className="text-(--color-my-accents-green)" size={24} />
-                <p className="font-power text-white">
+                <p className="font-power-med text-white">
                     New:{" "}
-                    <span className="text-my-secondary">Slab-Tree Editor (Jan 24)</span>
+                    <span className="font-power-reg text-my-secondary">Slab-Tree Editor (Jan 24)</span>
                 </p>
             </div>
             <section className="hidden md:flex flex-row items-center gap-12">
