@@ -38,7 +38,7 @@ export function LoginCard() {
                     variant="outline"
                     subject="icon-text"
                     size="sm"
-                    className="flex cursor-pointer w-full gap-2! md:gap-3!"
+                    className="flex cursor-pointer w-full gap-3!"
                     onClick={() => handleSocialLogin("google")}
                 >
                     <Google className="size-4.5!" />
@@ -48,7 +48,7 @@ export function LoginCard() {
                     variant="outline"
                     subject="icon-text"
                     size="sm"
-                    className="flex cursor-pointer w-full gap-2! md:gap-3!"
+                    className="flex cursor-pointer w-full gap-3!"
                     onClick={() => handleSocialLogin("github")}
                 >
                     <GitHub className="size-4.5!" />

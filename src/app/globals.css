@@ -25,9 +25,7 @@
   --breakpoint-5xl: 112.5rem;
 
   --font-sans: var(--font-inter);
-  --font-mono:
-    ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono",
-    "Courier New", monospace;
+  --font-power: var(--font-neue-power);
 
   --radius-0: 0;
   --radius-0-25: 0.0625rem;
@@ -178,9 +176,6 @@
   --color-heart: hsl(var(--heart));
   --color-heart-border: hsl(var(--heart-border));
 
-  --font-sans: var(--font-inter);
-  --font-power: var(--font-neue-power);
-
   --color-my-primary: #09090b;
   --color-my-secondary: #717174;
 
@@ -196,6 +191,9 @@
 
 @layer base {
   :root {
+    --nav-height: 72px;
+    --footer-height: 44px;
+
     --background: 0 0% 100%;
     --foreground: 240 10% 4%;
 
@@ -295,19 +293,40 @@
   * {
     @apply border-border;
   }
+  *,
+  ::before,
+  ::after {
+    font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  }
 
   body {
-    font-family: var(--font-inter);
-    font-weight: 400;
+    @apply font-sans antialiased;
     font-feature-settings:
       "rlig" 1,
       "calt" 1;
   }
   button {
-    font-weight: 400;
+    @apply font-normal;
+  }
+  button,
+  p,
+  input,
+  optgroup,
+  select,
+  textarea {
+    font-family: inherit;
+    font-weight: inherit;
   }
 }
+
 @layer components {
+  /* Main structure */
+  .main-content {
+    height: 100vh;
+    padding-top: var(--nav-height);
+    padding-bottom: var(--footer-height);
+  }
+  /* Neue Power utilities */
   .font-power-light {
     font-family: var(--font-neue-power);
     font-weight: 300;
@@ -328,9 +347,9 @@
     font-weight: 900;
   }
 
-  /* --- TRANSICIONES --- */
+  /* --- TRANSITIONS --- */
 
-  /* Escalas y movimientos */
+  /* Scale and movement */
   .t-transform {
     @apply transition-transform duration-250 ease-out;
   }
@@ -340,23 +359,23 @@
     @apply transition-colors duration-200;
   }
 
-  /* --- COMPORTAMIENTOS ESPECÍFICOS --- */
+  /* --- HOVER TRANSITIONS --- */
 
-  /* Escala hacia arriba (Hover normal O grupo) */
+  /* Grow scale (Normal or group hover) */
   .hover-grow:hover,
   .group:hover .group-grow {
     @apply scale-115;
   }
 
-  /* Escala hacia abajo (Hover normal O grupo) */
+  /* Shrink scale (Normal or group hover) */
   .hover-shrink:hover,
   .group:hover .group-shrink {
     @apply scale-95;
   }
 
-  /* Cambio de color a blanco */
+  /* Change color to white */
   .hover-white:hover,
   .group:hover .group-white {
-    @apply text-white;
+    @apply text-white!;
   }
 }
