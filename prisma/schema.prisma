@@ -10,10 +10,53 @@ model User {
   id            String    @id @default(cuid())
   name          String?
   email         String    @unique
+  emailVerified Boolean   @default(false)
   image         String?
   role          String    @default("user")
-  links         Link[]
   createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  sessions      Session[]
+  accounts      Account[]
+  links         Link[]
+}
+
+model Session {
+  id        String   @id
+  expiresAt DateTime
+  token     String   @unique
+  createdAt DateTime
+  updatedAt DateTime
+  ipAddress String?
+  userAgent String?
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model Account {
+  id                    String    @id
+  accountId             String
+  providerId            String
+  userId                String
+  user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  accessToken           String?
+  refreshToken          String?
+  idToken               String?
+  accessTokenExpiresAt  DateTime?
+  refreshTokenExpiresAt DateTime?
+  scope                 String?
+  password              String?
+  createdAt             DateTime
+  updatedAt             DateTime
+}
+
+model Verification {
+  id         String    @id
+  identifier String
+  value      String
+  expiresAt  DateTime
+  createdAt  DateTime?
+  updatedAt  DateTime?
 }
 
 model Link {
@@ -36,11 +79,12 @@ model Link {
 model Click {
   id            String    @id @default(cuid())
   linkId        String
-  link          Link      @relation(fields: [linkId], references: [id])
+  link          Link      @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  @@index([linkId])
   
-  // Analíticas para tu dashboard
   country       String    @default("Unknown")
   device        String    @default("Desktop")
   source        String    @default("Direct") 
   timestamp     DateTime  @default(now())
+  
 }
