@@ -7,7 +7,7 @@ export default function Footer() {
     return (
         <footer className="absolute bottom-0 w-screen h-11 px-6 md:px-32 bg-my-primary flex flex-col md:flex-row items-center justify-center md:justify-between text-xs font-bold">
             <section className='flex items-center gap-3.5'>
-                <MessageCircleHeart className="text-(--color-my-accents-red)" size={20} />
+                <MessageCircleHeart className="text-my-accents-red" size={20} />
                 <p><span className="font-normal">Made by</span> <span className="cursor-pointer">Agvstindev</span> <span className="text-my-secondary font-normal">- inspired by Slug: by <span className="font-bold">Pheralb</span></span></p>
             </section>
             <section className="hidden md:flex items-center gap-12 text-my-secondary">
