@@ -11,6 +11,7 @@ model User {
   name          String?
   email         String    @unique
   emailVerified Boolean   @default(false)
+  
   image         String?
   role          String    @default("user")
   createdAt     DateTime  @default(now())
@@ -25,8 +26,10 @@ model Session {
   id        String   @id
   expiresAt DateTime
   token     String   @unique
+
   createdAt DateTime
   updatedAt DateTime
+
   ipAddress String?
   userAgent String?
   userId    String
@@ -39,13 +42,16 @@ model Account {
   providerId            String
   userId                String
   user                  User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+
   accessToken           String?
   refreshToken          String?
   idToken               String?
   accessTokenExpiresAt  DateTime?
   refreshTokenExpiresAt DateTime?
+
   scope                 String?
   password              String?
+
   createdAt             DateTime
   updatedAt             DateTime
 }
@@ -59,13 +65,20 @@ model Verification {
   updatedAt  DateTime?
 }
 
+enum LinkStatus {
+  PENDING    
+  VERIFIED   
+  DANGEROUS      
+}
+
 model Link {
   id            String    @id @default(cuid())
   shortSlug     String    @unique 
   originalUrl   String
   title         String?   
   description   String?
-  favicon       String?
+
+  status        LinkStatus @default(PENDING)
   
   userId        String?
   user          User?     @relation(fields: [userId], references: [id])

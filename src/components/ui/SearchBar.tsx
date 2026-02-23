@@ -10,7 +10,7 @@ const searchBarVariants = tv({
     ],
     variants: {
         inputSize: {
-            xs: "rounded-1.5 h-8 px-2 gap-2.5",
+            xs: "rounded-1-5 h-8 px-2 gap-2.5",
             sm: "rounded-2 h-9 px-2.5 gap-2.5",
             md: "rounded-2 h-10 px-3 gap-2.5",
             lg: "rounded-2.5 h-11 px-3.5 gap-2.5",
