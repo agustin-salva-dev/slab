@@ -1,3 +1,5 @@
+"use server";
+
 import { db } from "@/server/db";
 import { auth } from "@/server/auth";
 import { headers } from "next/headers";
@@ -26,6 +28,7 @@ export async function getUserLinks() {
       originalUrl: true,
       description: true,
       createdAt: true,
+      clickCount: true,
     },
   });
 }

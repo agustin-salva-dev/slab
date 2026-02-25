@@ -4,14 +4,14 @@ import { ChevronDown } from "lucide-react";
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
 import { CreateLinkButton } from "@/components/links/CreateLinkButton";
 import { getUserLinks } from "@/server/queries/links";
-import { LinkCard } from "@/components/links/LinkCard";
+import { LinkList } from "@/components/links/LinkList";
 
 export default async function Dashboard() {
-  const links = await getUserLinks();
+  const initialLinks = await getUserLinks();
   return (
     <>
       <div className="absolute top-0 left-0 h-screen w-screen bg-black/70 -z-10"></div>
-      <div className="h-full py-10 flex flex-col gap-3.5">
+      <div className="py-10 flex flex-col gap-8">
         <section className="group w-full flex gap-5 justify-center items-center font-power-ultra text-sm antialiased">
           <p className="cursor-pointer">My Slabs</p>
           <p className="text-my-secondary cursor-pointer t-color hover-white">
@@ -21,7 +21,7 @@ export default async function Dashboard() {
             Settings
           </p>
         </section>
-        <div className="flex flex-col md:flex-row gap-3.5 w-full justify-between">
+        <div className="flex flex-col md:flex-row gap-8 md:justify-between w-full ">
           <SearchBar
             type="email"
             placeholder="Search links"
@@ -67,18 +67,7 @@ export default async function Dashboard() {
             </Button>
           </section>
         </div>
-        {links.length > 0 ? (
-          links.map((link) => (
-            <LinkCard
-              key={link.id}
-              shortSlug={link.shortSlug}
-              originalUrl={link.originalUrl}
-              description={link.description}
-            />
-          ))
-        ) : (
-          <p className="text-my-secondary">No hay links para mostrar.</p>
-        )}
+        <LinkList initialLinks={initialLinks} />
       </div>
     </>
   );

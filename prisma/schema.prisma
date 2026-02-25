@@ -85,6 +85,7 @@ model Link {
   expiresAt     DateTime? 
   maxClicks     Int?      
   
+  clickCount   Int      @default(0)
   clicks        Click[]
   createdAt     DateTime  @default(now())
 }
