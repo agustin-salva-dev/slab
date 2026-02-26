@@ -1,14 +1,6 @@
 import { Inngest, EventSchemas } from "inngest";
 
-type SlabEvents = {
-  "link/click.recorded": {
-    data: {
-      linkId: string;
-      country?: string;
-      device?: string;
-    };
-  };
-};
+import { SlabEvents } from "./events";
 
 export const inngest = new Inngest({
   id: "slab-app",

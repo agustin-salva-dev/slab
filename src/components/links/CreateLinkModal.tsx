@@ -2,6 +2,9 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
+import type { getUserLinks } from "@/server/queries/links";
+
+type UserLinks = Awaited<ReturnType<typeof getUserLinks>>;
 import {
   Card,
   CardBody,
@@ -26,6 +29,9 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createLinkSchema, type CreateLinkInput } from "@/server/schemas/link";
 import { createLink } from "@/server/actions/links";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
+import { LinkStatus } from "@prisma/client";
+import { toast } from "sonner";
+import { useSWRConfig } from "swr";
 
 interface Props {
   isOpen: boolean;
@@ -33,6 +39,7 @@ interface Props {
 }
 
 export default function CreateLinkModal({ isOpen, onClose }: Props) {
+  const { mutate } = useSWRConfig();
   const {
     register,
     handleSubmit,
@@ -48,14 +55,48 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
   });
 
   const onSubmit = async (values: CreateLinkInput) => {
+    const optimisticLink = {
+      id: "optimistic-id",
+      shortSlug: values.shortSlug || "...",
+      originalUrl: values.originalUrl,
+      description: values.description || null,
+      createdAt: new Date(),
+      clickCount: 0,
+      status: "PENDING" as LinkStatus,
+    };
+
+    mutate(
+      "user-links",
+      (currentLinks: UserLinks | undefined) => {
+        return currentLinks
+          ? [optimisticLink, ...currentLinks]
+          : [optimisticLink];
+      },
+      false,
+    );
+
+    onClose();
+    reset();
+
     const result = await createLink(values);
 
     if (result.success) {
-      console.log("Link created!");
-      reset();
-      onClose();
+      toast.success("Link created!", {
+        description: "Your Slab is live and ready to share.",
+      });
+      mutate("user-links");
     } else {
-      console.error(result.error);
+      mutate("user-links");
+
+      if (result.errorCode === "SLUG_CONFLICT") {
+        toast.error("Short link already taken", {
+          description: result.error,
+        });
+      } else {
+        toast.error("Could not create the link", {
+          description: result.error ?? "Please try again.",
+        });
+      }
     }
   };
 

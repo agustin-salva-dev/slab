@@ -36,7 +36,7 @@ export default function Footer() {
           </p>
         </div>
         <Separator orientation="vertical" className="h-5" />
-        <p>v0.4.0</p>
+        <p>v0.5.0</p>
       </section>
     </footer>
   );

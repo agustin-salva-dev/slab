@@ -1,11 +1,11 @@
-import { inngest } from "./client";
+import { inngest } from "../../client";
 import { db } from "@/server/db";
 
 export const recordClick = inngest.createFunction(
   { id: "record-click", name: "Record Link Click", retries: 3 },
   { event: "link/click.recorded" },
   async ({ event, step }) => {
-    const { linkId, country, device } = event.data;
+    const { linkId, country, device, source } = event.data;
 
     if (!linkId) return { skip: true, message: "No linkId provided" };
 
@@ -16,7 +16,7 @@ export const recordClick = inngest.createFunction(
             linkId: linkId,
             country: country ?? "Unknown",
             device: device ?? "Desktop",
-            source: "Direct",
+            source: source ?? "Direct",
           },
         }),
         db.link.update({

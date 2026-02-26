@@ -29,6 +29,7 @@ export async function getUserLinks() {
       description: true,
       createdAt: true,
       clickCount: true,
+      status: true,
     },
   });
 }
