@@ -7,9 +7,9 @@ import { ThemeProvider } from "next-themes";
 import { Toaster } from "@/components/ui/Toast";
 
 export const metadata: Metadata = {
-  title: "Slab — All your links in one place.",
+  title: "Slab — Modern URL Shortener | All your links in one place.",
   description:
-    "Forgotten links into powerful assets. Create clean URLs that are safe to click, easy to remember, and impossible to ignore. We provide the tools to build your presence with confidence.",
+    "Slab turns long, forgotten links into powerful assets. Create clean URLs that are safe to click, easy to remember, and impossible to ignore. We provide the tools to build your presence with confidence.",
   icons: {
     icon: "/icon.png",
     apple: "/icon.png",

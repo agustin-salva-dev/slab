@@ -351,59 +351,77 @@
 @layer components {
   /* Main structure */
   .main-content {
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
     padding-top: var(--nav-height);
     padding-bottom: var(--footer-height);
   }
-  /* Neue Power utilities */
-  .font-power-light {
-    font-family: var(--font-neue-power);
-    font-weight: 300;
-  }
+}
 
-  .font-power-reg {
-    font-family: var(--font-neue-power);
-    font-weight: 400;
-  }
+/* Neue Power utilities */
+@utility font-power-light {
+  font-family: var(--font-neue-power);
+  font-weight: 300;
+}
 
-  .font-power-med {
-    font-family: var(--font-neue-power);
-    font-weight: 500;
-  }
+@utility font-power-reg {
+  font-family: var(--font-neue-power);
+  font-weight: 400;
+}
 
-  .font-power-ultra {
-    font-family: var(--font-neue-power);
-    font-weight: 900;
-  }
+@utility font-power-med {
+  font-family: var(--font-neue-power);
+  font-weight: 500;
+}
 
-  /* --- TRANSITIONS --- */
+@utility font-power-ultra {
+  font-family: var(--font-neue-power);
+  font-weight: 900;
+}
 
-  /* Scale and movement */
-  .t-transform {
-    @apply transition-transform duration-250 ease-out;
-  }
+/* --- TRANSITIONS --- */
 
-  /* Colores */
-  .t-color {
-    @apply transition-colors duration-200;
-  }
+/* Scale and movement */
+@utility t-transform {
+  @apply transition-transform duration-250 ease-out;
+}
 
-  /* --- HOVER TRANSITIONS --- */
+/* Colores */
+@utility t-color {
+  @apply transition-colors duration-200;
+}
 
-  /* Grow scale (Normal or group hover) */
-  .hover-grow:hover,
-  .group:hover .group-grow {
+/* --- HOVER TRANSITIONS --- */
+
+/* Grow scale (Normal or group hover) */
+@utility hover-grow {
+  &:hover,
+  .group:hover & {
     @apply scale-115;
   }
+}
 
-  /* Shrink scale (Normal or group hover) */
-  .hover-shrink:hover,
-  .group:hover .group-shrink {
+/* Shrink scale (Normal or group hover) */
+@utility hover-shrink {
+  &:hover,
+  .group:hover & {
     @apply scale-95;
   }
+}
 
-  /* Change color to white */
-  .hover-white:hover,
-  .group:hover .group-white {
-    @apply text-white!;
+/* Change color to white */
+@utility hover-white {
+  &:hover,
+  .group:hover & {
+    @apply text-white;
+  }
+}
+
+/* Change color to my-hover */
+@utility hover-my-hover {
+  &:hover,
+  .group:hover & {
+    color: var(--color-my-hover);
   }
 }

@@ -19,7 +19,7 @@ function SkeletonsFallback() {
 export default function Dashboard() {
   return (
     <div className="py-10 flex flex-col gap-8">
-      <section className="group w-full flex gap-5 justify-center items-center font-power-ultra text-sm antialiased">
+      <section className="w-full flex gap-5 justify-center items-center font-power-ultra text-sm antialiased">
         <p className="cursor-pointer">My Slabs</p>
         <p className="text-my-secondary cursor-pointer t-color hover-white">
           Analytics
