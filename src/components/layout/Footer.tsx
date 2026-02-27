@@ -15,7 +15,7 @@ import {
 import { Separator } from "@/components/ui/Separator";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 
-const APP_VERSION = "v0.6.0";
+const APP_VERSION = "v0.6.1";
 
 export default function Footer() {
   const [activeIndex, setActiveIndex] = useState(0);
