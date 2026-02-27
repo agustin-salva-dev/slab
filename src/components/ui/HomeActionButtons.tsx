@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/Button";
 import { toast } from "sonner";
 import { ExternalLink } from "./ExternalLink";
 import { SITE_LINKS } from "@/config/constants";
-import { authClient } from "@/lib/auth-client";
+import { authClient } from "@/lib/auth/client";
 import Link from "next/link";
 
 export function HomeActionButtons() {
