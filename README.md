@@ -17,7 +17,7 @@
   <strong>
     <a href="#-user-interface--design-system">Dashboard</a> &nbsp;•&nbsp; 
     <a href="#️-the-slab-journey-from-concept-to-reality">Roadmap</a> &nbsp;•&nbsp; 
-    <a href="#-contributing-guidelines">Contribute</a> &nbsp;•&nbsp; 
+    <a href="#-getting-started">Contribute</a> &nbsp;•&nbsp; 
     <a href="https://github.com/agustin-salva-dev/slab/issues/new" target="_blank">Create Issue</a> &nbsp;•&nbsp; 
     <a href="https://x.com/agvsdev" target="_blank">X/Twitter</a>
   </strong>
@@ -39,7 +39,7 @@
   <kbd>
     <img src=".github/assets/home-desktop.png" alt="Slab Landing Page" width="450" />
   </kbd>
-  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;&nbsp;&nbsp;&nbsp;
   <kbd>
     <img src=".github/assets/login-desktop.png" alt="Slab Secure Auth" width="450" />
   </kbd>
