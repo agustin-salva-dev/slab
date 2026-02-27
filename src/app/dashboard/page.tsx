@@ -18,16 +18,7 @@ function SkeletonsFallback() {
 
 export default function Dashboard() {
   return (
-    <div className="py-10 flex flex-col gap-8">
-      <section className="w-full flex gap-5 justify-center items-center font-power-ultra text-sm antialiased">
-        <p className="cursor-pointer">My Slabs</p>
-        <p className="text-my-secondary cursor-pointer t-color hover-white">
-          Analytics
-        </p>
-        <p className="text-my-secondary cursor-pointer t-color hover-white">
-          Settings
-        </p>
-      </section>
+    <>
       <div className="flex flex-col md:flex-row gap-8 md:justify-between w-full ">
         <SearchBar
           type="email"
@@ -77,6 +68,6 @@ export default function Dashboard() {
       <Suspense fallback={<SkeletonsFallback />}>
         <LinkListContainer />
       </Suspense>
-    </div>
+    </>
   );
 }

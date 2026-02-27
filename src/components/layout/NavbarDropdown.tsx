@@ -38,6 +38,12 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
   const iconsSize = 22;
   const textSize = "text-sm";
 
+  if (isPending) {
+    return (
+      <div className="flex items-center justify-center size-9 rounded-md bg-white/5 animate-pulse border border-white/10" />
+    );
+  }
+
   return (
     <>
       <DropdownMenu>
@@ -157,7 +163,7 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
               </DropdownMenuItem>
               <DropdownMenuItem asChild>
                 <Link
-                  href="/settings"
+                  href="/dashboard/settings"
                   className="cursor-pointer flex items-center gap-3 group"
                 >
                   <span className="flex items-center justify-center">
