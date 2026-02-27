@@ -201,7 +201,7 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
           {/* Resources & Support */}
           <DropdownMenuItem asChild>
             <a
-              href="mailto:hola@agvstindev.com"
+              href={SITE_LINKS.githubIssues}
               className="cursor-pointer flex items-center gap-3 group"
               target="_blank"
               rel="noreferrer"
@@ -284,7 +284,7 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <a
-              href={SITE_LINKS.githubProfile}
+              href={SITE_LINKS.githubProjects}
               target="_blank"
               rel="noreferrer"
               className="cursor-pointer flex items-center gap-3 group"
