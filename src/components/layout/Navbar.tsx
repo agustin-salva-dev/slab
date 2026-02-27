@@ -31,7 +31,7 @@ export default function Navbar() {
         <p className="font-power-med text-white">
           New:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            Auth Scalability Refactor & Login UX (Feb 26)
+            Settings page & Account Management (Feb 27)
           </span>
         </p>
       </ExternalLink>

@@ -6,7 +6,7 @@ export const SITE_LINKS = {
   linkedin: "https://www.linkedin.com/in/agustin-salva-dev/",
   xProfile: "https://x.com/agvsdev",
   latestFeature:
-    "https://github.com/agustin-salva-dev/slab/commit/56221d59f9222f600305cddbb10151e43cf5d9a1",
+    "https://github.com/agustin-salva-dev/slab/commit/eebe61075e5be3c9f162e36a0c1a2dcfa2bdad5a",
 } as const;
 
 export type SiteLinkKey = keyof typeof SITE_LINKS;
