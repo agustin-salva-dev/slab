@@ -37,11 +37,11 @@
   <br/>
 
   <kbd>
-    <img src=".github/assets/home-desktop.png" alt="Slab Landing Page" width="450" />
+    <img src=".github/assets/home-desktop.png" alt="Slab Landing Page" width="380" />
   </kbd>
-  &nbsp;&nbsp;&nbsp;&nbsp;
+  &nbsp;
   <kbd>
-    <img src=".github/assets/login-desktop.png" alt="Slab Secure Auth" width="450" />
+    <img src=".github/assets/login-desktop.png" alt="Slab Secure Auth" width="380" />
   </kbd>
 </div>
 
@@ -80,13 +80,13 @@
 
 *Slab represents a leap from traditional MERN architectures to a unified Next.js stack, optimized for DX and raw speed.*
 
-- 🚀 **Next.js & TypeScript:** Eliminated CORS issues and dual deployments. SSR provides blazing-fast initial loads, while Server Actions keep mutations secure—all under end-to-end Type-Safety.
-  
-- 🗄️ **Prisma ORM:** Replaced raw SQL for better scalability. Prisma guarantees strict types from DB to Client, making schema migrations effortless and queries self-documenting.
-  
-- ⚡ **Inngest (Background Jobs):** A redirect must happen in milliseconds. Instead of blocking the request to save analytics, Slab redirects instantly at the Edge and queues DB writes asynchronously via Inngest.
-  
-- 🎛️ **Optimistic UI:** Powered by `SWR` and Server Actions. Creating links or deleting data mutates the UI instantly (0ms perceived latency), eliminating the need for blocking spinners.
+- 🚀 **Next.js & TypeScript:** Unified stack. End-to-end type safety, blazing-fast SSR, and secure Server Actions.
+
+- 🗄️ **Prisma ORM:**  Replaced raw SQL for better scalability. Strict DB-to-client typing and effortless schema migrations.
+
+- ⚡ **Inngest (Background Jobs):** 0ms redirect latency. Analytics are queued asynchronously at the Edge, never blocking the user.
+
+- 🎛️ **Optimistic UI:** SWR-powered instant mutations. Zero loading spinners, fluid experience.
 
   <br />
 
@@ -96,7 +96,7 @@
 
 **📍 Phase 1: Foundation & Design**
 > *Establishing the brand identity and the technical roots.*
-- 🎨 **UI/UX System:** Designed the logo and high-fidelity Figma prototypes prioritizing interaction states.
+- 🎨 **UI/UX System:** Designed the logo and Figma prototypes prioritizing interaction states.
   
 - 🏗️ **Architecture:** Evaluated and selected a modern, highly scalable stack (Next.js 15, Prisma, Inngest).
 
@@ -106,13 +106,13 @@
 > *Structuring the application and securing the doors.*
 - 🌐 **Global Layout:** Scaffolded the App Router, landing page, and dynamic CSS-variable themes.
   
-- 🔐 **Better-Auth Integration:** Rolled out a premium, secure login flow supporting OAuth (GitHub/Google) and Magic Links.
+- 🔐 **Better-Auth Integration:** Rolled out a premium, secure login flow supporting OAuth (GitHub/Google).
 
 <br />
 
 **📍 Phase 3: The Link Engine**
 > *The heart of Slab: making URL shortening instantaneous.*
-- ⚡ **Optimistic Link Generation:** Engineered 0ms perceived latency for creating and managing links via `SWR`.
+- ⚡ **Optimistic Link Generation:** 0ms perceived latency for creating and managing links via `SWR`.
   
 - 📊 **Data Capture:** Built the background tracking system to capture geolocation, device, and browser data on every click.
   
