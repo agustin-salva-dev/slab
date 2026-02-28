@@ -29,20 +29,24 @@ export default function RootLayout({
           defaultTheme="dark"
           disableTransitionOnChange
         >
-          <Image
-            src="/slab-hero-bg.webp"
-            alt="Abstract black and white background"
-            fill
-            priority
-            className="hidden md:block blur-sm opacity-55 -z-10"
-          />
-          <Image
-            src="/slab-mobile-hero-bg.webp"
-            alt="Abstract black and white background in mobile dimensions"
-            fill
-            priority
-            className="block md:hidden blur-sm opacity-55 -z-10"
-          />
+          <div className="fixed inset-0 -z-10 pointer-events-none">
+            <Image
+              src="/slab-hero-bg.webp"
+              alt="Abstract black and white background"
+              fill
+              sizes="100vw"
+              priority
+              className="hidden md:block blur-sm opacity-55 object-cover"
+            />
+            <Image
+              src="/slab-mobile-hero-bg.webp"
+              alt="Abstract black and white background in mobile dimensions"
+              fill
+              sizes="100vw"
+              priority
+              className="block md:hidden blur-sm opacity-55 object-cover"
+            />
+          </div>
           <Navbar />
           <main className="main-content px-6 md:px-32">{children}</main>
           <Footer />

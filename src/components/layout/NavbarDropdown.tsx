@@ -228,7 +228,9 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <a
-              href="#"
+              href={SITE_LINKS.contributing}
+              target="_blank"
+              rel="noreferrer"
               className="cursor-pointer flex items-center gap-3 group"
             >
               <span className="flex items-center justify-center">
@@ -241,13 +243,13 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
               <span
                 className={`text-my-secondary group-hover:text-my-hover transition-colors ${textSize}`}
               >
-                Documentation
+                Contributing
               </span>
             </a>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
-            <a
-              href="#"
+            <Link
+              href="/docs"
               className="cursor-pointer flex items-center gap-3 group"
             >
               <span className="flex items-center justify-center">
@@ -260,9 +262,9 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
               <span
                 className={`text-my-secondary group-hover:text-my-hover transition-colors ${textSize}`}
               >
-                API
+                Architecture
               </span>
-            </a>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
 
