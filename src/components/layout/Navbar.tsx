@@ -31,7 +31,7 @@ export default function Navbar() {
         <p className="font-power-med text-white">
           New:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            Settings page & Account Management (Feb 27)
+            Architecture Docs & System Design (Feb 28)
           </span>
         </p>
       </ExternalLink>
