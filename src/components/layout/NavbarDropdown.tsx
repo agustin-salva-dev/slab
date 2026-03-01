@@ -40,7 +40,7 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
 
   if (isPending) {
     return (
-      <div className="flex items-center justify-center size-9 rounded-md bg-white/5 animate-pulse border border-white/10" />
+      <div className="flex items-center justify-center size-9 rounded-1-5 bg-white/5 animate-pulse border border-white/10" />
     );
   }
 
@@ -206,11 +206,9 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
 
           {/* Resources & Support */}
           <DropdownMenuItem asChild>
-            <a
-              href={SITE_LINKS.githubIssues}
+            <Link
+              href={SITE_LINKS.reportBug}
               className="cursor-pointer flex items-center gap-3 group"
-              target="_blank"
-              rel="noreferrer"
             >
               <span className="flex items-center justify-center">
                 <Bug
@@ -224,7 +222,7 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
               >
                 Report a bug
               </span>
-            </a>
+            </Link>
           </DropdownMenuItem>
           <DropdownMenuItem asChild>
             <a
