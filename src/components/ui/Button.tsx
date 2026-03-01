@@ -63,7 +63,7 @@ const buttonVariants = tv({
     {
       size: "lg",
       subject: ["text", "text-icon", "icon-text"],
-      className: "rounded-2.5 text-4 h-12 gap-x-2 px-4.5 [&_svg]:size-4.5",
+      className: "rounded-2 text-4 h-12 gap-x-2 px-4.5 [&_svg]:size-4.5",
     },
     {
       size: "xs",
