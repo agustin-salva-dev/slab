@@ -31,7 +31,7 @@ export default function Navbar() {
         <p className="font-power-med text-white">
           New:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            Report Bug & Settings Flow (Mar 01)
+            Top Click Analytics in Dashboard. (Mar 04)
           </span>
         </p>
       </ExternalLink>
