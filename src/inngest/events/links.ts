@@ -9,8 +9,7 @@ export type LinkEvents = {
     data: {
       linkId: string;
       country?: string;
-      device?: string;
-      source?: string;
+      rawUserAgent?: string;
     };
   };
 };

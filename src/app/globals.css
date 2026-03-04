@@ -191,7 +191,7 @@
   --color-my-accents-green: #34c759;
   --color-my-accents-red: #ff383c;
   --color-my-accents-yellow: #ffcc00;
-  --color-my-accents-red: #ff383c;
+  --color-my-accents-purple: #cb30e0;
   --color-my-accents-blue: #0088ff;
 
   --color-sidebar-ring: var(--sidebar-ring);
@@ -320,6 +320,10 @@
   * {
     @apply border-border;
     @apply border-border outline-ring/50;
+  }
+  svg,
+  svg * {
+    outline: none;
   }
   *,
   ::before,

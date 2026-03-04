@@ -20,33 +20,14 @@ export default async function RedirectPage({
   const reqHeaders = await headers();
 
   const country = reqHeaders.get("x-vercel-ip-country") || "Unknown";
+  const rawUserAgent = reqHeaders.get("user-agent") || "";
 
-  const rawReferer = reqHeaders.get("referer");
-  let source = "Direct";
-  if (rawReferer) {
-    try {
-      const url = new URL(rawReferer);
-      source = url.hostname.replace("www.", "");
-    } catch {
-      source = rawReferer;
-    }
-  }
-
-  const uaString = reqHeaders.get("user-agent") || "";
-  let device = "Desktop";
-  if (/mobile/i.test(uaString)) {
-    device = "Mobile";
-  } else if (/tablet/i.test(uaString)) {
-    device = "Tablet";
-  }
-
-  await inngest.send({
+  void inngest.send({
     name: "link/click.recorded",
     data: {
       linkId: link.id,
       country,
-      device,
-      source,
+      rawUserAgent,
     },
   });
 

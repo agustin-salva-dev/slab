@@ -92,7 +92,7 @@ export default function Footer() {
   }, [activeIndex, handleNext]);
 
   return (
-    <footer className="fixed bottom-0 w-screen h-11 bg-my-primary flex items-center justify-center md:justify-between px-2 md:px-32 text-xs font-bold">
+    <footer className="fixed bottom-0 w-full h-11 bg-my-primary flex items-center justify-center md:justify-between px-2 md:px-32 text-xs font-bold">
       {/* Mobile view (Carousel) */}
       <div className="flex md:hidden w-full max-w-full items-center justify-between">
         <button

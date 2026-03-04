@@ -98,7 +98,6 @@ model Click {
   
   country       String    @default("Unknown")
   device        String    @default("Desktop")
-  source        String    @default("Direct") 
   timestamp     DateTime  @default(now())
   
 }
