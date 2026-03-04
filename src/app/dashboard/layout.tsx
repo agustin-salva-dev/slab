@@ -19,7 +19,7 @@ export default async function DashboardLayout({
   return (
     <>
       <div className="fixed inset-0 bg-black/65 -z-10" />
-      <div className="py-10 flex flex-col gap-8">
+      <div className="py-10 space-y-8">
         <DashboardNav />
         {children}
       </div>

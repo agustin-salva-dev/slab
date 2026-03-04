@@ -1,0 +1,32 @@
+@baseUrl = http://localhost:3000
+# Reemplaza SLUG_HERE con el slug (alias corto) de un link real que hayas creado en tu base de datos.
+@slug = SLUG_HERE
+
+### 1. Click desde Estados Unidos, Dispositivo Móvil (iPhone), Red Social: Twitter
+GET {{baseUrl}}/s/{{slug}}
+x-vercel-ip-country: US
+User-Agent: Mozilla/5.0 (iPhone; CPU iPhone OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1
+Referer: https://twitter.com/mi_tweet_promocional
+
+### 2. Click desde España, Dispositivo Desktop (Windows), Tráfico Directo
+GET {{baseUrl}}/s/{{slug}}
+x-vercel-ip-country: ES
+User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36
+
+### 3. Click desde México, Dispositivo Tablet (iPad), Red Social: Facebook
+GET {{baseUrl}}/s/{{slug}}
+x-vercel-ip-country: MX
+User-Agent: Mozilla/5.0 (iPad; CPU OS 16_0 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.0 Mobile/15E148 Safari/604.1
+Referer: https://facebook.com/mi_grupo_privado
+
+### 4. Click desde Argentina, Dispositivo Móvil (Android), Red Social: Instagram
+GET {{baseUrl}}/s/{{slug}}
+x-vercel-ip-country: AR
+User-Agent: Mozilla/5.0 (Linux; Android 13; SM-S918B) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Mobile Safari/537.36
+Referer: https://instagram.com/mi_perfil
+
+### 5. Click desde Alemania, Dispositivo Desktop (Mac), Red Social: LinkedIn
+GET {{baseUrl}}/s/{{slug}}
+x-vercel-ip-country: DE
+User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36
+Referer: https://linkedin.com/in/mi_publicacion
