@@ -25,7 +25,7 @@ export function CustomRangeSection() {
 
       startTransition(async () => {
         try {
-          const result = await getTopLinksBetween(range.from, to);
+          const result = await getTopLinksBetween({ from: range.from, to });
           setData(result);
         } catch {
           toast.error("Error loading data", {

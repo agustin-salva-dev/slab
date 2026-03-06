@@ -13,14 +13,35 @@ export const metadata: Metadata = {
 export default async function AnalyticsPage() {
   const now = new Date();
 
-  const [allTime, today, lastWeek, lastMonth] = await Promise.all([
-    getTopLinksBetween(),
-    getTopLinksBetween(new Date(now.getTime() - 24 * 60 * 60 * 1000), now),
-    getTopLinksBetween(new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000), now),
-    getTopLinksBetween(new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000), now),
-  ]);
+  const [allTime, today, lastWeek, lastMonth, desktop, mobile, tablet] =
+    await Promise.all([
+      getTopLinksBetween(),
+      getTopLinksBetween({
+        from: new Date(now.getTime() - 24 * 60 * 60 * 1000),
+        to: now,
+      }),
+      getTopLinksBetween({
+        from: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000),
+        to: now,
+      }),
+      getTopLinksBetween({
+        from: new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000),
+        to: now,
+      }),
+      getTopLinksBetween({ device: "Desktop" }),
+      getTopLinksBetween({ device: "Mobile" }),
+      getTopLinksBetween({ device: "Tablet" }),
+    ]);
 
-  const sectionsData = [allTime, today, lastWeek, lastMonth];
+  const sectionsData = [
+    allTime,
+    today,
+    lastWeek,
+    lastMonth,
+    desktop,
+    mobile,
+    tablet,
+  ];
 
   return (
     <div className="space-y-8">
@@ -45,6 +66,19 @@ export default async function AnalyticsPage() {
       </div>
 
       <CustomRangeSection />
+
+      <AnalyticsChartSection
+        {...ANALYTICS_SECTIONS[4]}
+        data={sectionsData[4]}
+      />
+      <AnalyticsChartSection
+        {...ANALYTICS_SECTIONS[5]}
+        data={sectionsData[5]}
+      />
+      <AnalyticsChartSection
+        {...ANALYTICS_SECTIONS[6]}
+        data={sectionsData[6]}
+      />
     </div>
   );
 }

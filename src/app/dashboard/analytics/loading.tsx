@@ -53,6 +53,19 @@ export default function AnalyticsLoading() {
         />
       </div>
 
+      <ChartSkeleton
+        title={ANALYTICS_SECTIONS[4].title}
+        icon={ANALYTICS_SECTIONS[4].icon}
+      />
+      <ChartSkeleton
+        title={ANALYTICS_SECTIONS[5].title}
+        icon={ANALYTICS_SECTIONS[5].icon}
+      />
+      <ChartSkeleton
+        title={ANALYTICS_SECTIONS[6].title}
+        icon={ANALYTICS_SECTIONS[6].icon}
+      />
+
       <AnalyticsCard
         title="Custom Range"
         icon={CalendarSearch}

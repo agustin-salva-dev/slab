@@ -1,4 +1,11 @@
-import { BarChart3, Clock, CalendarDays } from "lucide-react";
+import {
+  BarChart3,
+  Clock,
+  CalendarDays,
+  Monitor,
+  Smartphone,
+  Tablet,
+} from "lucide-react";
 import type { ElementType } from "react";
 
 interface AnalyticsSectionConfig {
@@ -32,5 +39,23 @@ export const ANALYTICS_SECTIONS: AnalyticsSectionConfig[] = [
     icon: CalendarDays,
     iconClassName: "text-my-accents-red",
     emptyMessage: "No clicks in the last 30 days yet.",
+  },
+  {
+    title: "Top 5 Desktop",
+    icon: Monitor,
+    iconClassName: "text-my-accents-cyan",
+    emptyMessage: "No desktop clicks yet.",
+  },
+  {
+    title: "Top 5 Mobile",
+    icon: Smartphone,
+    iconClassName: "text-my-accents-orange",
+    emptyMessage: "No mobile clicks yet.",
+  },
+  {
+    title: "Top 5 Tablet",
+    icon: Tablet,
+    iconClassName: "text-my-accents-indigo",
+    emptyMessage: "No tablet clicks yet.",
   },
 ];

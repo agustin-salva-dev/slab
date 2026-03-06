@@ -5,12 +5,14 @@ import { headers } from "next/headers";
 import { db } from "@/server/db";
 import type { LinkClickStat } from "@/types/analytics";
 
-// Prisma groupBy doesn't support relation includes, so we enrich
-// the top-5 link IDs with a second query.
-export async function getTopLinksBetween(
-  from?: Date,
-  to?: Date,
-): Promise<LinkClickStat[]> {
+export async function getTopLinksBetween(options?: {
+  from?: Date;
+  to?: Date;
+  device?: string;
+  limit?: number;
+}): Promise<LinkClickStat[]> {
+  const { from, to, device, limit = 5 } = options || {};
+
   const session = await auth.api.getSession({
     headers: await headers(),
   });
@@ -23,10 +25,11 @@ export async function getTopLinksBetween(
       where: {
         link: { userId: session.user.id },
         timestamp: from || to ? { gte: from, lte: to } : undefined,
+        device: device,
       },
       _count: { linkId: true },
       orderBy: { _count: { linkId: "desc" } },
-      take: 5,
+      take: limit,
     });
 
     if (grouped.length === 0) return [];

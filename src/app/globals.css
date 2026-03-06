@@ -193,6 +193,9 @@
   --color-my-accents-yellow: #ffcc00;
   --color-my-accents-purple: #cb30e0;
   --color-my-accents-blue: #0088ff;
+  --color-my-accents-cyan: #00c0e8;
+  --color-my-accents-orange: #ff8d28;
+  --color-my-accents-indigo: #6155f5;
 
   --color-sidebar-ring: var(--sidebar-ring);
   --color-sidebar-border: var(--sidebar-border);
