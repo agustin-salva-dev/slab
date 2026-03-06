@@ -1,5 +1,3 @@
-"use client";
-
 import Image from "next/image";
 import { House, Github } from "lucide-react";
 import { Button } from "@/components/ui/Button";
@@ -31,7 +29,7 @@ export default function Navbar() {
         <p className="font-power-med text-white">
           New:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            Device Analytics (Mobile, Tablet) added! (Mar 06)
+            Country Analytics with CDN Flags + Performance Optimizations! (Mar 06)
           </span>
         </p>
       </ExternalLink>

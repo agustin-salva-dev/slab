@@ -29,20 +29,20 @@ import Image from "next/image";
 import { authClient } from "@/lib/auth/client";
 import { SITE_LINKS } from "@/config/constants";
 import { LogoutModal } from "@/components/auth/LogoutModal";
-import { useState } from "react";
+import { useState, useSyncExternalStore } from "react";
+
+const emptySubscribe = () => () => {};
+const useIsMounted = () =>
+  useSyncExternalStore(emptySubscribe, () => true, () => false);
 
 export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
   const { data: session, isPending } = authClient.useSession();
   const [isLogoutModalOpen, setIsLogoutModalOpen] = useState(false);
+  const isMounted = useIsMounted();
+
   const user = session?.user;
   const iconsSize = 22;
   const textSize = "text-sm";
-
-  if (isPending) {
-    return (
-      <div className="flex items-center justify-center size-9 rounded-1-5 bg-white/5 animate-pulse border border-white/10" />
-    );
-  }
 
   return (
     <>
@@ -50,11 +50,17 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
         <DropdownMenuTrigger asChild>
           {trigger ? (
             trigger
+          ) : (!isMounted || isPending) ? (
+            <button
+              type="button"
+              aria-label="User Menu"
+              disabled
+              className="flex items-center justify-center size-9 rounded-1-5 bg-white/5 animate-pulse border border-white/10 outline-none"
+            />
           ) : user ? (
             <button
               type="button"
               aria-label="User Menu"
-              disabled={isPending}
               className="outline-none focus:outline-none ring-0 focus:ring-0"
             >
               <Logs
@@ -68,7 +74,6 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
               size="sm"
               subject="text-icon"
               className="cursor-pointer"
-              disabled={isPending}
             >
               Get started <ChevronRight className="size-4.75!" />
             </Button>

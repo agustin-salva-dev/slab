@@ -1,5 +1,6 @@
 "use client";
 
+import { useSyncExternalStore } from "react";
 import {
   BarChart,
   Bar,
@@ -9,6 +10,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { BarChart3 } from "lucide-react";
+import { Skeleton } from "@/components/ui/Skeleton";
 import type { LinkClickStat } from "@/types/analytics";
 
 interface ChartEntry {
@@ -51,10 +53,24 @@ function CustomTooltip({
   );
 }
 
+/**
+ * Returns true only in the browser after hydration, false during SSR.
+ * Used to prevent recharts from rendering its 0×0 empty container on the server.
+ */
+const emptySubscribe = () => () => {};
+const useIsMounted = () =>
+  useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
+
 export function LinkBarChart({
   data,
   emptyMessage = "No click data yet. Share your links to start tracking!",
 }: LinkBarChartProps) {
+  const isMounted = useIsMounted();
+
   if (data.length === 0) {
     return (
       <div className="flex flex-col items-center justify-center h-48 gap-3 text-my-secondary">
@@ -62,6 +78,19 @@ export function LinkBarChart({
           <BarChart3 size={24} className="opacity-80" />
         </div>
         <p className="text-sm font-medium">{emptyMessage}</p>
+      </div>
+    );
+  }
+
+  if (!isMounted) {
+    return (
+      <div className="flex flex-col gap-4">
+        {data.map((_, idx) => (
+          <div key={idx} className="flex items-center gap-3">
+            <Skeleton className="h-4 w-24" />
+            <Skeleton className="h-8 flex-1 rounded-r-2" />
+          </div>
+        ))}
       </div>
     );
   }

@@ -5,10 +5,10 @@ import { endOfDay } from "date-fns";
 import type { DateRange } from "react-day-picker";
 import { CalendarSearch, BarChart3 } from "lucide-react";
 
-import { LinkBarChart } from "@/components/analytics/LinkBarChart";
-import { AnalyticsCard } from "@/components/analytics/AnalyticsCard";
+import { LinkBarChart } from "@/components/analytics/shared/LinkBarChart";
+import { AnalyticsCard } from "@/components/analytics/shared/AnalyticsCard";
 import { DateRangePicker } from "@/components/ui/DateRangePicker";
-import { getTopLinksBetween } from "@/server/queries/analytics";
+import { fetchTopLinksAction } from "@/server/actions/analytics";
 import type { LinkClickStat } from "@/types/analytics";
 import { toast } from "sonner";
 
@@ -25,7 +25,7 @@ export function CustomRangeSection() {
 
       startTransition(async () => {
         try {
-          const result = await getTopLinksBetween({ from: range.from, to });
+          const result = await fetchTopLinksAction({ from: range.from, to });
           setData(result);
         } catch {
           toast.error("Error loading data", {
