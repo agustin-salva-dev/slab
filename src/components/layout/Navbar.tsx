@@ -31,7 +31,7 @@ export default function Navbar() {
         <p className="font-power-med text-white">
           New:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            Top Click Analytics in Dashboard. (Mar 04)
+            Device Analytics (Mobile, Tablet) added! (Mar 06)
           </span>
         </p>
       </ExternalLink>
