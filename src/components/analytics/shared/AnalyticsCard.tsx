@@ -2,7 +2,7 @@ import { cn } from "@/utils/tailwind";
 import type { ElementType, ReactNode } from "react";
 
 interface AnalyticsCardProps {
-  title: string;
+  title: ReactNode;
   icon: ElementType;
   iconClassName?: string;
   headerAction?: ReactNode;

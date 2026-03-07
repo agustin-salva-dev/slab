@@ -1,7 +1,10 @@
-import { getTopLinksBetween } from "@/server/queries/analytics";
-import { AnalyticsChartSection } from "@/components/analytics/AnalyticsChartSection";
-import { CustomRangeSection } from "@/components/analytics/CustomRangeSection";
-import { ANALYTICS_SECTIONS } from "./constants";
+import { Suspense } from "react";
+import { CustomRangeSection } from "@/components/analytics/time/CustomRangeSection";
+import { TimeAnalytics } from "@/components/analytics/time/TimeAnalytics";
+import { DeviceAnalytics } from "@/components/analytics/device/DeviceAnalytics";
+import { TopCountriesAnalytics } from "@/components/analytics/country/TopCountriesAnalytics";
+import { CountrySearch } from "@/components/analytics/country/CountrySearch";
+import { AnalyticsSkeleton } from "@/components/analytics/shared/AnalyticsSkeleton";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -10,75 +13,39 @@ export const metadata: Metadata = {
     "Visualize your link performance and track your most clicked links.",
 };
 
-export default async function AnalyticsPage() {
-  const now = new Date();
-
-  const [allTime, today, lastWeek, lastMonth, desktop, mobile, tablet] =
-    await Promise.all([
-      getTopLinksBetween(),
-      getTopLinksBetween({
-        from: new Date(now.getTime() - 24 * 60 * 60 * 1000),
-        to: now,
-      }),
-      getTopLinksBetween({
-        from: new Date(now.getTime() - 7 * 24 * 60 * 60 * 1000),
-        to: now,
-      }),
-      getTopLinksBetween({
-        from: new Date(now.getTime() - 30 * 24 * 60 * 60 * 1000),
-        to: now,
-      }),
-      getTopLinksBetween({ device: "Desktop" }),
-      getTopLinksBetween({ device: "Mobile" }),
-      getTopLinksBetween({ device: "Tablet" }),
-    ]);
-
-  const sectionsData = [
-    allTime,
-    today,
-    lastWeek,
-    lastMonth,
-    desktop,
-    mobile,
-    tablet,
-  ];
-
+export default function AnalyticsPage() {
   return (
     <div className="space-y-8">
-      <AnalyticsChartSection
-        {...ANALYTICS_SECTIONS[0]}
-        data={sectionsData[0]}
-      />
-      <AnalyticsChartSection
-        {...ANALYTICS_SECTIONS[1]}
-        data={sectionsData[1]}
-      />
-
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <AnalyticsChartSection
-          {...ANALYTICS_SECTIONS[2]}
-          data={sectionsData[2]}
-        />
-        <AnalyticsChartSection
-          {...ANALYTICS_SECTIONS[3]}
-          data={sectionsData[3]}
-        />
-      </div>
+      <Suspense fallback={<AnalyticsSkeleton count={3} />}>
+        <TimeAnalytics />
+      </Suspense>
 
       <CustomRangeSection />
 
-      <AnalyticsChartSection
-        {...ANALYTICS_SECTIONS[4]}
-        data={sectionsData[4]}
-      />
-      <AnalyticsChartSection
-        {...ANALYTICS_SECTIONS[5]}
-        data={sectionsData[5]}
-      />
-      <AnalyticsChartSection
-        {...ANALYTICS_SECTIONS[6]}
-        data={sectionsData[6]}
-      />
+      <Suspense fallback={<AnalyticsSkeleton count={3} />}>
+        <DeviceAnalytics />
+      </Suspense>
+
+      <div className="pt-8 border-t border-border/40">
+        <h2 className="text-2xl font-power-ultra tracking-tight mb-6">
+          Countries Analytics
+        </h2>
+
+        <div className="mb-8 p-6 bg-my-background border rounded-3 space-y-4">
+          <p className="font-power-med tracking-wide">
+            Search for a specific country to view its most clicked links.
+          </p>
+          <CountrySearch />
+        </div>
+
+        <Suspense
+          fallback={
+            <AnalyticsSkeleton count={2} title="Loading Top Countries..." />
+          }
+        >
+          <TopCountriesAnalytics />
+        </Suspense>
+      </div>
     </div>
   );
 }

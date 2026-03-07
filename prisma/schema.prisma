@@ -94,10 +94,12 @@ model Click {
   id            String    @id @default(cuid())
   linkId        String
   link          Link      @relation(fields: [linkId], references: [id], onDelete: Cascade)
-  @@index([linkId])
   
   country       String    @default("Unknown")
   device        String    @default("Desktop")
   timestamp     DateTime  @default(now())
   
+  @@index([linkId, timestamp])
+  @@index([linkId, device])
+  @@index([linkId, country])
 }

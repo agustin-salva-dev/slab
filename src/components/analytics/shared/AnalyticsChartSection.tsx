@@ -1,10 +1,10 @@
-import { LinkBarChart } from "@/components/analytics/LinkBarChart";
-import { AnalyticsCard } from "@/components/analytics/AnalyticsCard";
+import { LinkBarChart } from "./LinkBarChart";
+import { AnalyticsCard } from "./AnalyticsCard";
 import type { LinkClickStat } from "@/types/analytics";
-import type { ElementType } from "react";
+import type { ElementType, ReactNode } from "react";
 
 interface AnalyticsChartSectionProps {
-  title: string;
+  title: ReactNode;
   icon: ElementType;
   iconClassName?: string;
   data: LinkClickStat[];
