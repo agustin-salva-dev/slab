@@ -2,7 +2,7 @@ import { BugReportForm } from "./components/BugReportForm";
 import { Bug, TerminalSquare, AlertTriangle } from "lucide-react";
 
 export const metadata = {
-  title: "Report a Bug - Slab",
+  title: "Report a Bug",
   description:
     "Help us improve Slab by reporting bugs. We auto-generate a GitHub issue.",
 };

@@ -3,6 +3,13 @@ import { CoreStack } from "./components/CoreStack";
 import { EngineFlow } from "./components/EngineFlow";
 import { ArchitectureShowcases } from "./components/ArchitectureShowcases";
 import { PublicApiCallout } from "./components/PublicApiCallout";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Architecture",
+  description:
+    "Explore the technical architecture of Slab, built with Next.js, TypeScript, and PostgreSQL.",
+};
 
 export default function ArchitectureDocs() {
   return (

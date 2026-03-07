@@ -8,7 +8,7 @@ import { AnalyticsSkeleton } from "@/components/analytics/shared/AnalyticsSkelet
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Analytics | Slab",
+  title: "Analytics",
   description:
     "Visualize your link performance and track your most clicked links.",
 };
