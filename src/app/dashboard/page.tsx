@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ChevronDown } from "lucide-react";
@@ -6,6 +7,12 @@ import { CreateLinkButton } from "@/components/links/CreateLinkButton";
 import { Suspense } from "react";
 import { LinkListContainer } from "@/components/links/LinkListContainer";
 import { LinkCardSkeleton } from "@/components/links/LinkCardSkeleton";
+
+export const metadata: Metadata = {
+  title: "My Slabs",
+  description:
+    "Manage, track, and organize all your shortened links in one place.",
+};
 
 function SkeletonsFallback() {
   return (

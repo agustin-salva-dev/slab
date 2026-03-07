@@ -1,8 +1,15 @@
+import type { Metadata } from "next";
 import { auth } from "@/server/auth";
 import { headers } from "next/headers";
 import { GeneralSettings } from "@/components/settings/GeneralSettings";
 import { SecuritySettings } from "@/components/settings/SecuritySettings";
 import { AccountSettings } from "@/components/settings/AccountSettings";
+
+export const metadata: Metadata = {
+  title: "User Settings",
+  description:
+    "Manage your Slab account settings, API keys, and personal preferences.",
+};
 
 export default async function SettingsPage() {
   const session = await auth.api.getSession({
