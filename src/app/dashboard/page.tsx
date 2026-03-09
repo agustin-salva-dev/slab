@@ -2,9 +2,13 @@ import type { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ChevronDown } from "lucide-react";
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+/**
+ * TODO LATER: Toggle sort order (Newest to Oldest / Oldest to Newest) - FURTHER DOWN THE ROAD.
+ * import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
+ */
 import { CreateLinkButton } from "@/components/links/CreateLinkButton";
 import { Suspense } from "react";
+import { AddFilterModal } from "@/components/dashboard/AddFilterModal";
 import { LinkListContainer } from "@/components/links/LinkListContainer";
 import { LinkCardSkeleton } from "@/components/links/LinkCardSkeleton";
 
@@ -42,7 +46,7 @@ export default function Dashboard() {
         <section className="flex justify-between md:gap-6">
           <CreateLinkButton />
 
-          <Tabs
+          {/* <Tabs
             defaultValue="newer"
             className="h-fit w-fit rounded-2 flex items-center bg-my-border-primary"
           >
@@ -50,26 +54,30 @@ export default function Dashboard() {
               <TabsTrigger value="newer">Newer</TabsTrigger>
               <TabsTrigger value="older">Older</TabsTrigger>
             </TabsList>
-          </Tabs>
+          </Tabs> */}
 
-          <Button
-            variant="outline"
-            subject="text-icon"
-            size="xs"
-            className="flex md:hidden cursor-pointer shadow"
-          >
-            Filters
-            <ChevronDown size={15} className="fill-my-secondary" />
-          </Button>
-          <Button
-            variant="outline"
-            subject="text-icon"
-            size="sm"
-            className="hidden md:flex cursor-pointer shadow"
-          >
-            Filters
-            <ChevronDown size={15} className="fill-my-secondary" />
-          </Button>
+          <AddFilterModal>
+            <Button
+              variant="outline"
+              subject="text-icon"
+              size="xs"
+              className="flex md:hidden cursor-pointer shadow"
+            >
+              Filters
+              <ChevronDown size={15} className="fill-my-secondary" />
+            </Button>
+          </AddFilterModal>
+          <AddFilterModal>
+            <Button
+              variant="outline"
+              subject="text-icon"
+              size="sm"
+              className="hidden md:flex cursor-pointer shadow"
+            >
+              Filters
+              <ChevronDown size={15} className="fill-my-secondary" />
+            </Button>
+          </AddFilterModal>
         </section>
       </div>
       <Suspense fallback={<SkeletonsFallback />}>
