@@ -12,10 +12,16 @@ export default async function RedirectPage({
 
   const link = await db.link.findUnique({
     where: { shortSlug: slug },
-    select: { id: true, originalUrl: true },
+    select: { id: true, originalUrl: true, isActive: true, expiresAt: true },
   });
 
-  if (!link) notFound();
+  if (
+    !link ||
+    !link.isActive ||
+    (link.expiresAt && link.expiresAt < new Date())
+  ) {
+    notFound();
+  }
 
   const reqHeaders = await headers();
 

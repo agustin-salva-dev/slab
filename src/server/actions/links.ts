@@ -53,6 +53,7 @@ export const createLink = async (
         description: values.description,
         userId: session.user.id,
         status: LinkStatus.PENDING,
+        expiresAt: values.expiresAt,
       },
     });
 
@@ -63,6 +64,16 @@ export const createLink = async (
         originalUrl: result.originalUrl,
       },
     });
+
+    if (values.expiresAt) {
+      await inngest.send({
+        name: "link/expiration.scheduled",
+        data: {
+          linkId: result.id,
+          expiresAt: values.expiresAt.toISOString(),
+        },
+      });
+    }
 
     revalidatePath("/dashboard");
 
@@ -191,11 +202,7 @@ export const editLink = async (
       };
     }
 
-    /* Update the link. We DO NOT re-verify the domain as the requirement
-       "verifying that the destination link is secure" is only shown for creations 
-       based on the image, or we could trigger verification again. The user didn't mention it.
-       Let's just update fields. */
-    await db.link.update({
+    const updatedLink = await db.link.update({
       where: {
         id: values.id,
       },
@@ -203,8 +210,24 @@ export const editLink = async (
         originalUrl: values.originalUrl,
         shortSlug: values.shortSlug,
         description: values.description,
+        ...(values.expiresAt !== undefined && { expiresAt: values.expiresAt }),
       },
     });
+
+    await inngest.send({
+      name: "link/expiration.cancelled",
+      data: { linkId: updatedLink.id }
+    })
+
+    if (updatedLink.expiresAt) {
+      await inngest.send({
+        name: "link/expiration.scheduled",
+        data: {
+          linkId: updatedLink.id,
+          expiresAt: updatedLink.expiresAt.toISOString()
+        }
+      })
+    }
 
     revalidatePath("/dashboard");
     return { success: true };
@@ -225,6 +248,118 @@ export const editLink = async (
       success: false,
       errorCode: "UNKNOWN",
       error: "Could not update the link. Please try again.",
+    };
+  }
+};
+
+export type ToggleLinkErrorCode = "AUTH_ERROR" | "NOT_FOUND" | "UNKNOWN";
+
+interface ToggleLinkResult {
+  success: boolean;
+  errorCode?: ToggleLinkErrorCode;
+  error?: string;
+}
+
+export const disableLink = async (linkId: string): Promise<ToggleLinkResult> => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    console.error("[disableLink] Unauthenticated request.");
+    return {
+      success: false,
+      errorCode: "AUTH_ERROR",
+      error: "You must log in.",
+    };
+  }
+
+  try {
+    await db.link.update({
+      where: {
+        id: linkId,
+        userId: session.user.id,
+      },
+      data: {
+        isActive: false,
+      },
+    });
+
+    revalidatePath("/dashboard");
+    return { success: true };
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      console.error(
+        "[disableLink] Link not found or not owned by user:",
+        linkId,
+      );
+      return {
+        success: false,
+        errorCode: "NOT_FOUND",
+        error: "Link not found.",
+      };
+    }
+
+    console.error("[disableLink] Unexpected error:", error);
+    return {
+      success: false,
+      errorCode: "UNKNOWN",
+      error: "Could not disable the link. Please try again.",
+    };
+  }
+};
+
+export const enableLink = async (linkId: string): Promise<ToggleLinkResult> => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session) {
+    console.error("[enableLink] Unauthenticated request.");
+    return {
+      success: false,
+      errorCode: "AUTH_ERROR",
+      error: "You must log in.",
+    };
+  }
+
+  try {
+    await db.link.update({
+      where: {
+        id: linkId,
+        userId: session.user.id,
+      },
+      data: {
+        isActive: true,
+      },
+    });
+
+    revalidatePath("/dashboard");
+    return { success: true };
+  } catch (error) {
+    if (
+      error instanceof Prisma.PrismaClientKnownRequestError &&
+      error.code === "P2025"
+    ) {
+      console.error(
+        "[enableLink] Link not found or not owned by user:",
+        linkId,
+      );
+      return {
+        success: false,
+        errorCode: "NOT_FOUND",
+        error: "Link not found.",
+      };
+    }
+
+    console.error("[enableLink] Unexpected error:", error);
+    return {
+      success: false,
+      errorCode: "UNKNOWN",
+      error: "Could not enable the link. Please try again.",
     };
   }
 };

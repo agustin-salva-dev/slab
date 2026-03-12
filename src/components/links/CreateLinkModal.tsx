@@ -24,7 +24,7 @@ import {
 }
 import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createLinkSchema, type CreateLinkInput } from "@/server/schemas/link";
 import { createLink } from "@/server/actions/links";
@@ -32,6 +32,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { LinkStatus } from "@prisma/client";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
+import { DatePicker } from "@/components/ui/DatePicker";
 
 interface Props {
   isOpen: boolean;
@@ -44,6 +45,7 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
     register,
     handleSubmit,
     reset,
+    control,
     formState: { errors, isSubmitting },
   } = useForm<CreateLinkInput>({
     resolver: zodResolver(createLinkSchema),
@@ -63,6 +65,7 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
       createdAt: new Date(),
       clickCount: 0,
       status: "PENDING" as LinkStatus,
+      expiresAt: values.expiresAt || null,
     };
 
     mutate(
@@ -173,6 +176,28 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
                   {errors.description && (
                     <span className="text-my-accents-red text-xs">
                       {errors.description.message}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-y-1.5">
+                  <label htmlFor="expires-at" className="text-3.5">
+                    Expiration date (optional)
+                  </label>
+                  <Controller
+                    control={control}
+                    name="expiresAt"
+                    render={({ field }) => (
+                      <DatePicker
+                        date={field.value}
+                        onSelect={field.onChange}
+                        placeholder="Select an expiration date"
+                      />
+                    )}
+                  />
+                  {errors.expiresAt && (
+                    <span className="text-my-accents-red text-xs">
+                      {errors.expiresAt?.message}
                     </span>
                   )}
                 </div>

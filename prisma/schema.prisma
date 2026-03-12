@@ -83,6 +83,7 @@ model Link {
   userId        String?
   user          User?     @relation(fields: [userId], references: [id])
   expiresAt     DateTime? 
+  isActive      Boolean   @default(true)
   maxClicks     Int?      
   
   clickCount   Int      @default(0)
