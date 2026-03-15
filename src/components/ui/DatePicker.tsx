@@ -13,10 +13,11 @@ import {
 } from "@/components/ui/Popover";
 
 interface DatePickerProps {
-  date: Date | undefined;
-  onSelect: (date: Date | undefined) => void;
+  date: Date | null | undefined;
+  onSelect: (date: Date | null | undefined) => void;
   className?: string;
   placeholder?: string;
+  id?: string;
 }
 
 export function DatePicker({
@@ -24,12 +25,14 @@ export function DatePicker({
   onSelect,
   className,
   placeholder = "Pick a date",
+  id,
 }: DatePickerProps) {
   return (
     <div className={cn("flex items-center gap-2", className)}>
       <Popover>
         <PopoverTrigger asChild>
           <Button
+            id={id}
             variant="outline"
             subject="icon-text"
             className={cn(
@@ -45,7 +48,7 @@ export function DatePicker({
         <PopoverContent className="w-auto overflow-hidden p-0" align="start">
           <Calendar
             mode="single"
-            selected={date}
+            selected={date ?? undefined}
             onSelect={onSelect}
             autoFocus
             disabled={(d) => d < new Date(new Date().setHours(0, 0, 0, 0))}
@@ -60,10 +63,11 @@ export function DatePicker({
           subject="icon"
           onClick={(e) => {
             e.preventDefault();
-            onSelect(undefined);
+            onSelect(null);
           }}
           aria-label="Clear date"
           type="button"
+          className="cursor-pointer"
         >
           <X size={16} />
         </Button>

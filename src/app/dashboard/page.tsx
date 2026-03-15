@@ -6,11 +6,11 @@ import { ChevronDown } from "lucide-react";
  * TODO LATER: Toggle sort order (Newest to Oldest / Oldest to Newest) - FURTHER DOWN THE ROAD.
  * import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
  */
-import { CreateLinkButton } from "@/components/links/CreateLinkButton";
+import { CreateLinkButton } from "@/components/links/list/CreateLinkButton";
 import { Suspense } from "react";
 import { AddFilterModal } from "@/components/dashboard/AddFilterModal";
-import { LinkListContainer } from "@/components/links/LinkListContainer";
-import { LinkCardSkeleton } from "@/components/links/LinkCardSkeleton";
+import { LinkListContainer } from "@/components/links/list/LinkListContainer";
+import { LinkCardSkeleton } from "@/components/links/card/LinkCardSkeleton";
 
 export const metadata: Metadata = {
   title: "My Slabs",

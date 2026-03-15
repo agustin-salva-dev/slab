@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -13,7 +13,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/Card";
-import { Input } from "@/components/ui/Input";
 import { Button } from "@/components/ui/Button";
 import { editLink } from "@/server/actions/links";
 import { editLinkSchema, type EditLinkInput } from "@/server/schemas/link";
@@ -29,27 +28,40 @@ interface Props {
     shortSlug: string;
     originalUrl: string;
     description: string | null;
+    expiresAt: Date | null;
+    isActive: boolean;
   };
 }
+
+import { LinkForm } from "../form/LinkForm";
 
 export function EditLinkModal({ isOpen, onClose, link }: Props) {
   const { mutate } = useSWRConfig();
   const [isEnding, setIsEnding] = useState(false);
 
+  const { id, shortSlug, originalUrl, description, expiresAt } = link;
+
+  const formValues = useMemo(
+    () => ({
+      id,
+      shortSlug,
+      originalUrl,
+      description: description ?? "",
+      expiresAt: expiresAt ? new Date(expiresAt) : null,
+    }),
+    [id, shortSlug, originalUrl, description, expiresAt],
+  );
+
+  const form = useForm<EditLinkInput>({
+    resolver: zodResolver(editLinkSchema),
+    values: formValues,
+  });
+
   const {
-    register,
     handleSubmit,
     reset,
-    formState: { errors, isSubmitting },
-  } = useForm<EditLinkInput>({
-    resolver: zodResolver(editLinkSchema),
-    defaultValues: {
-      id: link.id,
-      shortSlug: link.shortSlug,
-      originalUrl: link.originalUrl,
-      description: link.description ?? "",
-    },
-  });
+    formState: { isSubmitting },
+  } = form;
 
   const handleClose = () => {
     reset();
@@ -63,6 +75,10 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
       "user-links",
       (currentLinks: UserLinks | undefined) => {
         if (!currentLinks) return [];
+
+        const isFutureExpiration =
+          data.expiresAt && data.expiresAt > new Date();
+
         return currentLinks.map((l) =>
           l.id === link.id
             ? {
@@ -70,6 +86,8 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
                 shortSlug: data.shortSlug,
                 originalUrl: data.originalUrl,
                 description: data.description ?? null,
+                expiresAt: data.expiresAt ?? null,
+                isActive: isFutureExpiration ? true : l.isActive,
               }
             : l,
         );
@@ -116,60 +134,7 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
             </CardHeader>
 
             <CardBody className="flex flex-col gap-y-4">
-              <div className="flex flex-col gap-y-1.5">
-                <label className="text-sm text-my-secondary">
-                  Destination URL
-                </label>
-                <Input
-                  {...register("originalUrl")}
-                  placeholder="https://example.com/my-long-url"
-                  disabled={isSubmitting || isEnding}
-                />
-                {errors.originalUrl && (
-                  <span className="text-sm text-my-accents-red">
-                    {errors.originalUrl.message}
-                  </span>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-y-1.5">
-                <label className="text-sm text-my-secondary">
-                  Short link name
-                </label>
-                <div className="flex relative items-center">
-                  <span className="absolute left-3 text-sm text-my-secondary">
-                    s/
-                  </span>
-                  <Input
-                    {...register("shortSlug")}
-                    className="pl-7 pb-0.5"
-                    placeholder="my-link"
-                    disabled={isSubmitting || isEnding}
-                  />
-                </div>
-                {errors.shortSlug && (
-                  <span className="text-sm text-my-accents-red">
-                    {errors.shortSlug.message}
-                  </span>
-                )}
-              </div>
-
-              <div className="flex flex-col gap-y-1.5">
-                <label className="text-sm text-my-secondary">
-                  Description
-                  <span className="text-my-tertiary ml-1">(Optional)</span>
-                </label>
-                <Input
-                  {...register("description")}
-                  placeholder="What is this link for?"
-                  disabled={isSubmitting || isEnding}
-                />
-                {errors.description && (
-                  <span className="text-sm text-my-accents-red">
-                    {errors.description.message}
-                  </span>
-                )}
-              </div>
+              <LinkForm form={form} isSubmitting={isSubmitting || isEnding} />
             </CardBody>
 
             <CardFooter className="flex justify-end gap-x-3">

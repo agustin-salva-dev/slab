@@ -2,9 +2,9 @@
 
 import { useMemo } from "react";
 import useSWR from "swr";
-import { LinkCard } from "./LinkCard";
+import { LinkCard } from "../card/LinkCard";
 import { getUserLinks } from "@/server/queries/links";
-import { LinkCardSkeleton } from "./LinkCardSkeleton";
+import { LinkCardSkeleton } from "../card/LinkCardSkeleton";
 import { EmptyLinkList } from "./EmptyLinkList";
 import { useFilterStore } from "@/stores/useFilterStore";
 import { matchesCreatedFilters } from "@/utils/filters/dateFilters";
@@ -56,6 +56,8 @@ export function LinkList({ initialLinks }: LinkListProps) {
             createdAt={link.createdAt}
             clickCount={link.clickCount}
             status={link.status}
+            expiresAt={link.expiresAt}
+            isActive={link.isActive}
           />
         ),
       )}
@@ -63,7 +65,6 @@ export function LinkList({ initialLinks }: LinkListProps) {
   );
 }
 
-// Shown when active filters produce zero results
 function EmptyFilterResult({ onClear }: { onClear: () => void }) {
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
@@ -87,4 +88,3 @@ function EmptyFilterResult({ onClear }: { onClear: () => void }) {
     </div>
   );
 }
-

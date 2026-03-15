@@ -30,6 +30,8 @@ export async function getUserLinks() {
       createdAt: true,
       clickCount: true,
       status: true,
+      expiresAt: true,
+      isActive: true,
     },
   });
 }

@@ -18,7 +18,7 @@ export const createLinkSchema = z.object({
     .max(100, "Description must be under 100 characters")
     .optional(),
 
-  expiresAt: z.date().optional(),
+  expiresAt: z.date().optional().nullable(),
 });
 
 export type CreateLinkInput = z.infer<typeof createLinkSchema>;
