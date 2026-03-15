@@ -29,7 +29,7 @@ export default function Navbar() {
         <p className="font-power-med text-white">
           New:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            Country Analytics with CDN Flags + Performance Optimizations! (Mar 06)
+            Set Expiration Dates for your Slabs! Auto-disable links on time. (Mar 14)
           </span>
         </p>
       </ExternalLink>

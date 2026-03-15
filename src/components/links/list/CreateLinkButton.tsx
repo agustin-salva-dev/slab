@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { Button } from "@/components/ui/Button";
-import CreateLinkModal from "./CreateLinkModal";
+import CreateLinkModal from "../modals/CreateLinkModal";
 import { Plus } from "lucide-react";
 
 export function CreateLinkButton() {

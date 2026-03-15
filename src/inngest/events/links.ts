@@ -12,4 +12,15 @@ export type LinkEvents = {
       rawUserAgent?: string;
     };
   };
+  "link/expiration.scheduled": {
+    data: {
+      linkId: string;
+      expiresAt: string;
+    };
+  };
+  "link/expiration.cancelled": {
+    data: {
+      linkId: string;
+    };
+  };
 };

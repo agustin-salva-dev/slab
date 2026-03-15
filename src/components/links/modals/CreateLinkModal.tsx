@@ -22,8 +22,6 @@ import {
         SelectValue,
     } from "@/components/ui/Select"; */
 }
-import { Input } from "@/components/ui/Input";
-import { Textarea } from "@/components/ui/Textarea";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createLinkSchema, type CreateLinkInput } from "@/server/schemas/link";
@@ -32,6 +30,7 @@ import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { LinkStatus } from "@prisma/client";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
+import { LinkForm } from "../form/LinkForm";
 
 interface Props {
   isOpen: boolean;
@@ -40,12 +39,7 @@ interface Props {
 
 export default function CreateLinkModal({ isOpen, onClose }: Props) {
   const { mutate } = useSWRConfig();
-  const {
-    register,
-    handleSubmit,
-    reset,
-    formState: { errors, isSubmitting },
-  } = useForm<CreateLinkInput>({
+  const form = useForm<CreateLinkInput>({
     resolver: zodResolver(createLinkSchema),
     defaultValues: {
       originalUrl: "",
@@ -54,7 +48,17 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
     },
   });
 
+  const {
+    handleSubmit,
+    reset,
+    formState: { isSubmitting },
+  } = form;
+
   const onSubmit = async (values: CreateLinkInput) => {
+    const isFutureExpiration = values.expiresAt
+      ? values.expiresAt > new Date()
+      : true;
+
     const optimisticLink = {
       id: "optimistic-id",
       shortSlug: values.shortSlug || "...",
@@ -63,6 +67,8 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
       createdAt: new Date(),
       clickCount: 0,
       status: "PENDING" as LinkStatus,
+      expiresAt: values.expiresAt || null,
+      isActive: isFutureExpiration,
     };
 
     mutate(
@@ -118,64 +124,7 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
           <CardBody className="flex flex-col gap-y-4">
             <form onSubmit={handleSubmit(onSubmit)}>
               <div className="flex flex-col gap-y-4">
-                <div className="flex flex-col gap-y-1.5">
-                  <label htmlFor="destination-url" className="text-3.5">
-                    Destination URL
-                  </label>
-                  <Input
-                    id="destination-url"
-                    {...register("originalUrl")}
-                    placeholder="https://example.com"
-                    className={
-                      errors.originalUrl ? "border-my-accents-red" : ""
-                    }
-                    type="text"
-                    disabled={isSubmitting}
-                  />
-                  {errors.originalUrl && (
-                    <span className="text-my-accents-red text-xs">
-                      {errors.originalUrl.message}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex flex-col gap-y-1.5">
-                  <label htmlFor="short-link" className="text-3.5">
-                    Short link (opcional)
-                  </label>
-                  <Input
-                    id="short-link"
-                    {...register("shortSlug")}
-                    placeholder="mylink"
-                    className={
-                      errors.originalUrl ? "border-my-accents-red" : ""
-                    }
-                    type="text"
-                    disabled={isSubmitting}
-                  />
-                  {errors.shortSlug && (
-                    <span className="text-my-accents-red text-xs">
-                      {errors.shortSlug.message}
-                    </span>
-                  )}
-                </div>
-
-                <div className="flex flex-col gap-y-1.5">
-                  <label htmlFor="short-link" className="text-3.5">
-                    Description
-                  </label>
-                  <Textarea
-                    {...register("description")}
-                    placeholder="What is this link for?"
-                    className={`resize-none ${errors.originalUrl ? "border-my-accents-red" : ""}`}
-                    disabled={isSubmitting}
-                  />
-                  {errors.description && (
-                    <span className="text-my-accents-red text-xs">
-                      {errors.description.message}
-                    </span>
-                  )}
-                </div>
+                <LinkForm form={form} isSubmitting={isSubmitting} />
               </div>
               <CardFooter className="flex justify-end gap-x-4">
                 <Button
@@ -195,22 +144,6 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
                 </Button>
               </CardFooter>
             </form>
-            {/* <div className="flex flex-col gap-y-1.5">
-                    <label htmlFor="short-link" className="text-3.5">Add tags</label>
-                    <Select>
-                        <SelectTrigger className="w-full">
-                            <SelectValue placeholder="Select a tag" />
-                        </SelectTrigger>
-                        <SelectContent className="w-full">
-                            <SelectGroup>
-                                <SelectItem value="apple">Tag</SelectItem>
-                                <SelectItem value="banana">Tag 2</SelectItem>
-                                <SelectItem value="blueberry">Third tag</SelectItem>
-                                <SelectItem value="grapes">Tag 4</SelectItem>
-                            </SelectGroup>
-                        </SelectContent>
-                    </Select>
-                </div> */}
           </CardBody>
         </Card>
       </DialogContent>

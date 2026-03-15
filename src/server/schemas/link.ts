@@ -17,6 +17,8 @@ export const createLinkSchema = z.object({
     .string()
     .max(100, "Description must be under 100 characters")
     .optional(),
+
+  expiresAt: z.date().optional().nullable(),
 });
 
 export type CreateLinkInput = z.infer<typeof createLinkSchema>;
@@ -38,6 +40,8 @@ export const editLinkSchema = z.object({
     .max(100, "Description must be under 100 characters")
     .optional()
     .or(z.literal("")),
+
+  expiresAt: z.date().optional().nullable(),
 });
 
 export type EditLinkInput = z.infer<typeof editLinkSchema>;
