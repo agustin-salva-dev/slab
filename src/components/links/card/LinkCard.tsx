@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Card, CardBody } from "@/components/ui/Card";
 import { DeleteLinkModal } from "../modals/DeleteLinkModal";
 import { EditLinkModal } from "../modals/EditLinkModal";
+import { DisableLinkModal } from "../modals/DisableLinkModal";
 import { formatSmartDate } from "@/utils/formatSmartDate";
 import { LinkStatusIcon } from "./LinkStatusIcon";
 import { LinkActionTooltip } from "./LinkActionTooltip";
@@ -18,6 +19,7 @@ import {
   BadgeMinus,
   BadgeQuestionMark,
   BadgeAlert,
+  CircleSlash2,
 } from "lucide-react";
 import { Separator } from "@/components/ui/Separator";
 import { Callout, CalloutText } from "@/components/ui/Callout";
@@ -49,6 +51,7 @@ export function LinkCard({
   const [copied, setCopied] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [isEditOpen, setIsEditOpen] = useState(false);
+  const [isDisableOpen, setIsDisableOpen] = useState(false);
 
   const handleCopy = async () => {
     if (!isActive) {
@@ -65,8 +68,14 @@ export function LinkCard({
       await navigator.clipboard.writeText(fullUrl);
       setCopied(true);
       setTimeout(() => setCopied(false), 5000);
+      toast.success("Link copied", {
+        description: `/${shortSlug} copied to clipboard.`,
+      });
     } catch (err) {
       console.error("Failed to copy: ", err);
+      toast.error("Could not copy link", {
+        description: "Please copy it manually from the URL.",
+      });
     }
   };
 
@@ -78,7 +87,7 @@ export function LinkCard({
   return (
     <>
       <Card
-        className={`w-full h-fit transition-all duration-300 ${!isActive ? "opacity-50 grayscale" : ""}`}
+        className={`w-full h-fit t-transform ${!isActive ? "opacity-35 grayscale" : ""}`}
       >
         <CardBody className="flex flex-col gap-y-2.5 sm:gap-y-3.5">
           {status === LinkStatus.PENDING && (
@@ -154,6 +163,13 @@ export function LinkCard({
               />
 
               <LinkActionTooltip
+                label={isActive ? "Disable link" : "Enable link"}
+                onClick={() => setIsDisableOpen(true)}
+                className="text-my-secondary hover:text-white cursor-pointer transition-all"
+                icon={<CircleSlash2 size={18} />}
+              />
+
+              <LinkActionTooltip
                 label="Delete link"
                 onClick={() => setIsDeleteOpen(true)}
                 className={`text-my-secondary ${isActive ? "hover:text-my-accents-red" : "hover:text-white"} cursor-pointer`}
@@ -191,8 +207,7 @@ export function LinkCard({
       <DeleteLinkModal
         isOpen={isDeleteOpen}
         onClose={() => setIsDeleteOpen(false)}
-        linkId={id}
-        shortSlug={shortSlug}
+        link={{ id, shortSlug }}
       />
       <EditLinkModal
         isOpen={isEditOpen}
@@ -205,6 +220,11 @@ export function LinkCard({
           expiresAt: expiresAt ?? null,
           isActive,
         }}
+      />
+      <DisableLinkModal
+        isOpen={isDisableOpen}
+        onClose={() => setIsDisableOpen(false)}
+        link={{ id, shortSlug, isActive }}
       />
     </>
   );
