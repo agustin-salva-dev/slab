@@ -6,7 +6,7 @@ export const SITE_LINKS = {
   linkedin: "https://www.linkedin.com/in/agustin-salva-dev/",
   xProfile: "https://x.com/agvsdev",
   latestFeature:
-    "https://github.com/agustin-salva-dev/slab/commit/6e3475d3c220b15f891bab75150bec8f9451b56f",
+    "https://github.com/agustin-salva-dev/slab/commit/479654f651cc1a35da1aff629cbb301387c91cee",
   contributing:
     "https://github.com/agustin-salva-dev/slab/tree/master?tab=readme-ov-file#-getting-started",
   reportBug: "/report-bug",
