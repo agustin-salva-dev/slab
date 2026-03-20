@@ -429,6 +429,6 @@
 @utility hover-my-hover {
   &:hover,
   .group:hover & {
-    color: var(--color-my-hover);
+    @apply text-my-hover;
   }
 }

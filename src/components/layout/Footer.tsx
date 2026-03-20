@@ -29,7 +29,7 @@ export default function Footer() {
           Made <span className="inline md:hidden">with love</span> by
         </span>{" "}
         <ExternalLink href="xProfile">Agvstindev</ExternalLink>{" "}
-        <span className="text-my-secondary font-normal hidden md:inline">
+        <span className="text-my-secondary font-normal hidden 2xl:inline">
           - inspired on Slug: by <span className="font-bold">Pheralb</span>
         </span>
       </p>
@@ -37,7 +37,7 @@ export default function Footer() {
 
     <section
       key="socials"
-      className="flex items-center gap-6 md:gap-12 text-my-secondary"
+      className="flex items-center gap-6 2xl:gap-12 text-my-secondary"
     >
       <ExternalLink
         href="githubProfile"
@@ -58,7 +58,7 @@ export default function Footer() {
       </ExternalLink>
     </section>,
 
-    <section key="status" className="flex items-center gap-6 md:gap-12">
+    <section key="status" className="flex items-center gap-6 2xl:gap-12">
       <div className="flex items-center gap-3.5">
         <Squircle className="fill-my-accents-yellow stroke-0 size-3 shrink-0" />
         <p className="truncate">
@@ -92,9 +92,9 @@ export default function Footer() {
   }, [activeIndex, handleNext]);
 
   return (
-    <footer className="fixed bottom-0 w-full h-11 bg-my-primary flex items-center justify-center md:justify-between px-2 md:px-32 text-xs font-bold">
+    <footer className="fixed bottom-0 w-full h-11 bg-my-primary flex items-center justify-center md:justify-between px-6 md:px-16 2xl:px-30 text-xs font-bold">
       {/* Mobile view (Carousel) */}
-      <div className="flex md:hidden w-full max-w-full items-center justify-between">
+      <div className="flex xl:hidden w-full max-w-full items-center justify-between">
         <button
           onClick={handlePrev}
           type="button"
@@ -119,7 +119,7 @@ export default function Footer() {
       </div>
 
       {/* Desktop view (All sections) */}
-      <div className="hidden md:flex w-full items-center justify-between">
+      <div className="hidden xl:flex w-full items-center justify-between">
         {sections.map((section, index) => (
           <div key={index}>{section}</div>
         ))}

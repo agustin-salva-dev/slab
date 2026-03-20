@@ -33,7 +33,11 @@ import { useState, useSyncExternalStore } from "react";
 
 const emptySubscribe = () => () => {};
 const useIsMounted = () =>
-  useSyncExternalStore(emptySubscribe, () => true, () => false);
+  useSyncExternalStore(
+    emptySubscribe,
+    () => true,
+    () => false,
+  );
 
 export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
   const { data: session, isPending } = authClient.useSession();
@@ -50,7 +54,7 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
         <DropdownMenuTrigger asChild>
           {trigger ? (
             trigger
-          ) : (!isMounted || isPending) ? (
+          ) : !isMounted || isPending ? (
             <button
               type="button"
               aria-label="User Menu"
@@ -83,7 +87,7 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
         <DropdownMenuContent
           align="end"
           sideOffset={36}
-          className="w-[240px] shadow-2xl shadow-black/80 backdrop-blur-xl bg-white/2.5"
+          className="w-[240px] shadow-2xl shadow-black/80 backdrop-blur-xl bg-black/30"
         >
           {user ? (
             <DropdownMenuLabel className="flex items-center gap-3 py-2">

@@ -42,7 +42,7 @@ export function LinkList({ initialLinks }: LinkListProps) {
   }
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-2 gap-x-25 gap-y-10">
+    <div className="grid grid-cols-1 xl:grid-cols-2 gap-x-10 2xl:gap-x-25 gap-y-10">
       {filteredLinks.map((link) =>
         link.id === "optimistic-id" ? (
           <LinkCardSkeleton key={link.id} />
