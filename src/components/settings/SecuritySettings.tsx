@@ -74,7 +74,7 @@ export function SecuritySettings({
     return (
       <li
         key={sess.id}
-        className="flex flex-col md:flex-row gap-4 md:gap-0 items-end justify-between border border-my-border-secondary/30 rounded-2 p-3 bg-white/5"
+        className="flex flex-col md:flex-row gap-4 md:gap-0 justify-between border border-my-border-secondary/30 rounded-2 p-3 bg-white/5"
       >
         <div className="flex items-center gap-4">
           <div className="p-2 bg-my-border-secondary/50 rounded-1 shadow-inner">
@@ -154,21 +154,21 @@ export function SecuritySettings({
                 <h3 className="text-sm font-power-med text-white flex items-center gap-2">
                   Other Devices
                 </h3>
-                <Button
-                  variant="destructive-outline"
-                  size="xs"
-                  subject="icon-text"
-                  className="cursor-pointer"
-                  onClick={handleRevokeAllOther}
-                  disabled={isPending}
-                >
-                  <ShieldAlert size={14} />
-                  Sign out of all other devices
-                </Button>
               </div>
-              <ul className="flex flex-col gap-3">
+              <ul className="flex flex-col gap-3 pb-4 xl:pb8">
                 {otherSessions.map((sess) => renderSessionItem(sess, false))}
               </ul>
+              <Button
+                variant="destructive-outline"
+                size="xs"
+                subject="icon-text"
+                className="cursor-pointer w-fit ml-auto"
+                onClick={handleRevokeAllOther}
+                disabled={isPending}
+              >
+                <ShieldAlert size={14} />
+                Sign out of all other devices
+              </Button>
             </div>
           )}
         </div>

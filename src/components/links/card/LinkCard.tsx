@@ -16,10 +16,10 @@ import {
   MousePointerClick,
   Bomb,
   Pen,
-  BadgeMinus,
+  X,
   BadgeQuestionMark,
   BadgeAlert,
-  CircleSlash2,
+  Ban,
 } from "lucide-react";
 import { Separator } from "@/components/ui/Separator";
 import { Callout, CalloutText } from "@/components/ui/Callout";
@@ -109,8 +109,8 @@ export function LinkCard({
 
           <section className="flex justify-between items-center">
             {/* LEFT SIDE: Slug, Copy Button, Status Icon */}
-            <div className="w-4/6 flex items-center gap-2 md:gap-4">
-              <h3 className="max-w-4/6 text-lg md:text-[22px] font-power-ultra wrap-break-word">
+            <div className="flex items-center gap-2 xl:gap-3 2xl:gap-4">
+              <h3 className="text-lg md:text-[22px] font-power-ultra wrap-break-word">
                 <span className="text-my-secondary pr-1">/</span>
                 {shortSlug}
               </h3>
@@ -132,7 +132,7 @@ export function LinkCard({
             </div>
 
             {/* RIGHT SIDE: Clicks, External Link, Edit, Delete */}
-            <div className="flex items-center gap-2 md:gap-4">
+            <div className="flex items-center gap-2 xl:gap-3 2xl:gap-4">
               <LinkActionTooltip
                 label={`${clickCount} clicks`}
                 delayDuration={0}
@@ -141,7 +141,7 @@ export function LinkCard({
                 icon={
                   <>
                     <MousePointerClick size={18} className="text-white" />
-                    <p className="hidden md:block font-power-ultra text-md">{`${clickCount} clicks`}</p>
+                    <p className="hidden 2xl:block font-power-ultra text-md">{`${clickCount} clicks`}</p>
                   </>
                 }
               />
@@ -151,29 +151,29 @@ export function LinkCard({
               <LinkActionTooltip
                 label="Go to destination"
                 href={originalUrl}
-                className="text-my-secondary hover:text-white cursor-pointer"
+                className="text-my-secondary hover:text-my-accents-green cursor-pointer"
                 icon={<SquareArrowOutUpRight size={18} />}
               />
 
               <LinkActionTooltip
                 label="Edit link"
                 onClick={() => setIsEditOpen(true)}
-                className="text-my-secondary hover:text-white cursor-pointer"
+                className="text-my-secondary hover:text-my-accents-blue cursor-pointer"
                 icon={<Pen size={18} />}
               />
 
               <LinkActionTooltip
                 label={isActive ? "Disable link" : "Enable link"}
                 onClick={() => setIsDisableOpen(true)}
-                className="text-my-secondary hover:text-white cursor-pointer transition-all"
-                icon={<CircleSlash2 size={18} />}
+                className="text-my-secondary hover:text-my-accents-yellow cursor-pointer"
+                icon={<Ban size={18} />}
               />
 
               <LinkActionTooltip
                 label="Delete link"
                 onClick={() => setIsDeleteOpen(true)}
-                className={`text-my-secondary ${isActive ? "hover:text-my-accents-red" : "hover:text-white"} cursor-pointer`}
-                icon={<BadgeMinus size={18} />}
+                className="text-my-secondary hover:text-my-accents-red cursor-pointer"
+                icon={<X size={23} />}
               />
             </div>
           </section>
