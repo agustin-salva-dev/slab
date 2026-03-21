@@ -26,7 +26,7 @@ export default function Footer() {
       <MessageCircleHeart className="text-my-accents-red" size={20} />
       <p className="truncate px-2">
         <span className="font-normal">
-          Made <span className="inline md:hidden">with love</span> by
+          Made <span className="inline 2xl:hidden">with love</span> by
         </span>{" "}
         <ExternalLink href="xProfile">Agvstindev</ExternalLink>{" "}
         <span className="text-my-secondary font-normal hidden 2xl:inline">
