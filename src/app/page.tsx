@@ -1,7 +1,7 @@
 import { HomeActionButtons } from "@/components/ui/HomeActionButtons";
 export default function Home() {
   return (
-    <div className="flex flex-col justify-center flex-1 text-white gap-12 md:gap-18 2xl:gap-28">
+    <div className="flex flex-col justify-center flex-1 text-white gap-5 md:gap-12 2xl:gap-14">
       <section className="flex flex-col items-center gap-5 md:gap-12 2xl:gap-14">
         <h1 className="text-4xl md:text-7xl 2xl:text-8xl font-bold text-center tracking-tighter">
           The foundation for <br />
