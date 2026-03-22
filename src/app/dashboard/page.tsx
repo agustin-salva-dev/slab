@@ -8,7 +8,7 @@ import { ChevronDown } from "lucide-react";
  */
 import { CreateLinkButton } from "@/components/links/list/CreateLinkButton";
 import { Suspense } from "react";
-import { AddFilterModal } from "@/components/dashboard/AddFilterModal";
+import { AddFilterModal } from "@/components/filters/modal/AddFilterModal";
 import { LinkListContainer } from "@/components/links/list/LinkListContainer";
 import { LinkCardSkeleton } from "@/components/links/card/LinkCardSkeleton";
 

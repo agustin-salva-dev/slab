@@ -1,16 +1,17 @@
 import { create } from "zustand";
-import type { ActiveFilters, CreatedFilter } from "@/types/filters";
+import type { ActiveFilters, FilterValue } from "@/types/filters";
 
 interface FilterStore {
   activeFilters: ActiveFilters;
-  toggleFilter: (section: keyof ActiveFilters, value: CreatedFilter) => void;
-  removeFilter: (section: keyof ActiveFilters, value: CreatedFilter) => void;
+  toggleFilter: (section: keyof ActiveFilters, value: FilterValue) => void;
+  removeFilter: (section: keyof ActiveFilters, value: FilterValue) => void;
   clearAllFilters: () => void;
   hasActiveFilters: () => boolean;
 }
 
 const INITIAL_FILTERS: ActiveFilters = {
   created: [],
+  expires: [],
 };
 
 export const useFilterStore = create<FilterStore>((set, get) => ({
@@ -18,7 +19,7 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
 
   toggleFilter: (section, value) =>
     set((state) => {
-      const current = state.activeFilters[section];
+      const current = state.activeFilters[section] as FilterValue[];
       const isActive = current.includes(value);
 
       return {
@@ -35,7 +36,9 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
     set((state) => ({
       activeFilters: {
         ...state.activeFilters,
-        [section]: state.activeFilters[section].filter((v) => v !== value),
+        [section]: (state.activeFilters[section] as FilterValue[]).filter(
+          (v) => v !== value,
+        ),
       },
     })),
 
