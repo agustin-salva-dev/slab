@@ -27,9 +27,9 @@ export default function Navbar() {
       >
         <StarHalf className="text-(--color-my-accents-green)" size={24} />
         <p className="font-power-med text-white">
-          New:{" "}
+          New filter:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            Full control: Enable or disable your Slabs instantly. (Mar 19)
+            Find links by their expiration date. (Mar 22)
           </span>
         </p>
       </ExternalLink>
