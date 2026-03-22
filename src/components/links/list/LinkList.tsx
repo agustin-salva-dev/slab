@@ -1,13 +1,11 @@
 "use client";
 
-import { useMemo } from "react";
 import useSWR from "swr";
 import { LinkCard } from "../card/LinkCard";
 import { getUserLinks } from "@/server/queries/links";
 import { LinkCardSkeleton } from "../card/LinkCardSkeleton";
 import { EmptyLinkList } from "./EmptyLinkList";
-import { useFilterStore } from "@/stores/useFilterStore";
-import { matchesCreatedFilters } from "@/utils/filters/dateFilters";
+import { useFilteredLinks } from "@/hooks/links/useFilteredLinks";
 import { SearchX } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
@@ -24,16 +22,7 @@ export function LinkList({ initialLinks }: LinkListProps) {
     revalidateOnFocus: true,
   });
 
-  const { activeFilters, clearAllFilters } = useFilterStore();
-
-  const filteredLinks = useMemo(() => {
-    if (!links) return [];
-    if (activeFilters.created.length === 0) return links;
-
-    return links.filter((link) =>
-      matchesCreatedFilters(new Date(link.createdAt), activeFilters.created),
-    );
-  }, [links, activeFilters.created]);
+  const { filteredLinks, clearAllFilters } = useFilteredLinks(links);
 
   if (!links || links.length === 0) return <EmptyLinkList />;
 
