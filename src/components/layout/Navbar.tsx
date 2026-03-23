@@ -27,9 +27,9 @@ export default function Navbar() {
       >
         <StarHalf className="text-(--color-my-accents-green)" size={24} />
         <p className="font-power-med text-white">
-          New filter:{" "}
+          New:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            Find links by their expiration date. (Mar 22)
+            Create custom tags for your links (Mar 23)
           </span>
         </p>
       </ExternalLink>

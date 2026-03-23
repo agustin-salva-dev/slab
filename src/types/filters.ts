@@ -7,9 +7,10 @@ export type ExpiresFilter =
   | "later"
   | "no-expiration";
 
-export type FilterValue = CreatedFilter | ExpiresFilter;
+export type FilterValue = CreatedFilter | ExpiresFilter | string;
 
 export interface ActiveFilters {
   created: CreatedFilter[];
   expires: ExpiresFilter[];
+  tags: string[];
 }

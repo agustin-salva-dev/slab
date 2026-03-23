@@ -1,6 +1,5 @@
 import {
   Sun,
-  Tag,
   CalendarOff,
   CalendarClock,
   Sunrise,
@@ -53,18 +52,6 @@ export const FILTER_SECTIONS: FilterSection[] = [
   },
 ];
 
-// Tags section (static, not functional yet)
-export const TAGS_SECTION = {
-  icon: Tag,
-  title: "Tags",
-  options: [
-    { icon: Tag, label: "Mi tag" },
-    { icon: Tag, label: "Secondary tag" },
-    { icon: Tag, label: "Third tag" },
-    { icon: Tag, label: "My four tag" },
-  ],
-};
-
 export function getChipMeta(
   section: keyof ActiveFilters,
   value: FilterValue,
@@ -80,4 +67,5 @@ export function getChipMeta(
 export const SECTION_LABELS: Record<keyof ActiveFilters, string> = {
   created: "Created",
   expires: "Expires",
+  tags: "Tag",
 };

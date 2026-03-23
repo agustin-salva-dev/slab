@@ -17,6 +17,7 @@ import { Button } from "@/components/ui/Button";
 import { editLink } from "@/server/actions/links";
 import { editLinkSchema, type EditLinkInput } from "@/server/schemas/link";
 import type { getUserLinks } from "@/server/queries/links";
+import { LINKS_CACHE_KEY } from "@/hooks/links/keys";
 
 type UserLinks = Awaited<ReturnType<typeof getUserLinks>>;
 
@@ -72,7 +73,7 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
     setIsEnding(true);
 
     mutate(
-      "user-links",
+      LINKS_CACHE_KEY,
       (currentLinks: UserLinks | undefined) => {
         if (!currentLinks) return [];
 
@@ -101,10 +102,10 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
       toast.success("Link updated!", {
         description: `/${data.shortSlug} has been updated successfully.`,
       });
-      mutate("user-links");
+      mutate(LINKS_CACHE_KEY);
       handleClose();
     } else {
-      mutate("user-links");
+      mutate(LINKS_CACHE_KEY);
 
       if (result.errorCode === "SLUG_CONFLICT") {
         toast.error("Short link already taken", {

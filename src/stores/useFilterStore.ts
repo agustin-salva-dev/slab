@@ -12,6 +12,7 @@ interface FilterStore {
 const INITIAL_FILTERS: ActiveFilters = {
   created: [],
   expires: [],
+  tags: [],
 };
 
 export const useFilterStore = create<FilterStore>((set, get) => ({

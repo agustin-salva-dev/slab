@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import type { getUserLinks } from "@/server/queries/links";
+import { LINKS_CACHE_KEY } from "@/hooks/links/keys";
 
 type UserLinks = Awaited<ReturnType<typeof getUserLinks>>;
 import {
@@ -69,10 +70,11 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
       status: "PENDING" as LinkStatus,
       expiresAt: values.expiresAt || null,
       isActive: isFutureExpiration,
+      tags: [],
     };
 
     mutate(
-      "user-links",
+      LINKS_CACHE_KEY,
       (currentLinks: UserLinks | undefined) => {
         return currentLinks
           ? [optimisticLink, ...currentLinks]
@@ -90,9 +92,9 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
       toast.success("Link created!", {
         description: "Your Slab is live and ready to share.",
       });
-      mutate("user-links");
+      mutate(LINKS_CACHE_KEY);
     } else {
-      mutate("user-links");
+      mutate(LINKS_CACHE_KEY);
 
       if (result.errorCode === "SLUG_CONFLICT") {
         toast.error("Short link already taken", {

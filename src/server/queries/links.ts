@@ -32,6 +32,17 @@ export async function getUserLinks() {
       status: true,
       expiresAt: true,
       isActive: true,
+      tags: {
+        select: {
+          tag: {
+            select: {
+              id: true,
+              name: true,
+              color: true,
+            },
+          },
+        },
+      },
     },
   });
 }
