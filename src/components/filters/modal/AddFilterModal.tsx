@@ -35,7 +35,7 @@ export function AddFilterModal({ children }: { children: React.ReactNode }) {
         <DropdownMenuContent
           align="end"
           sideOffset={18}
-          className="w-74 md:w-95"
+          className="w-74 md:w-95 flex flex-col max-h-[55vh]"
         >
           {/* Active filters chips */}
           {hasActiveFilters() && (
@@ -49,7 +49,7 @@ export function AddFilterModal({ children }: { children: React.ReactNode }) {
           <div
             role="group"
             aria-label="Filter options"
-            className="max-h-72 md:max-h-88 overflow-y-auto"
+            className="flex-1 overflow-y-auto min-h-0"
           >
             {FILTER_SECTIONS.map((filterSection, sectionIndex) => (
               <React.Fragment key={filterSection.title}>
