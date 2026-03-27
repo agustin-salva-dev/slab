@@ -89,8 +89,8 @@
 - 🎛️ **Optimistic UI:** SWR-powered instant mutations. Zero loading spinners, fluid experience.
 
   <br />
-
-## 🛣️ The Slab Journey: From Concept to Reality.
+<!--
+//## 🛣️ The Slab Journey: From Concept to Reality.
 
 *Building Slab is an ongoing process of prioritizing performance and user experience. Here is the step-by-step evolution of the platform:*
 
@@ -125,6 +125,7 @@
 - 🛡️ **Defensive Management:** Built strict Server Actions for profile updates, data exports, and multi-step account deletion.
 
 ---
+-->
 
 ### 🔮 What's Next? (Upcoming Features)
 *Slab is constantly evolving. Here is what is on the immediate horizon:*
