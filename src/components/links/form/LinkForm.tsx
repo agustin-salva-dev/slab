@@ -9,6 +9,10 @@ import { Input } from "@/components/ui/Input";
 import { Textarea } from "@/components/ui/Textarea";
 import { DatePicker } from "@/components/ui/DatePicker";
 import { Controller } from "react-hook-form";
+import { Tag } from "lucide-react";
+import { RemovableChip } from "@/components/ui/RemovableChip";
+import { TagSelectDropdown } from "@/components/tags/TagSelectDropdown";
+import { useTags } from "@/hooks/tags/useTags";
 
 interface LinkFormProps<T extends FieldValues> {
   form: UseFormReturn<T>;
@@ -24,6 +28,7 @@ export function LinkForm<T extends FieldValues>({
     control,
     formState: { errors },
   } = form;
+  const { tags } = useTags();
 
   return (
     <div className="flex flex-col gap-y-4">
@@ -69,7 +74,7 @@ export function LinkForm<T extends FieldValues>({
       <div className="flex flex-col gap-y-1.5">
         <label htmlFor="description" className="text-sm text-my-secondary">
           Description
-          <span className="text-my-tertiary ml-1">(Optional)</span>
+          <span className="ml-1">(Optional)</span>
         </label>
         <Textarea
           id="description"
@@ -88,7 +93,7 @@ export function LinkForm<T extends FieldValues>({
       <div className="flex flex-col gap-y-1.5">
         <label htmlFor="expires-at" className="text-sm text-my-secondary">
           Expiration date
-          <span className="text-my-tertiary ml-1">(Optional)</span>
+          <span className="ml-1">(Optional)</span>
         </label>
         <Controller
           control={control}
@@ -107,6 +112,49 @@ export function LinkForm<T extends FieldValues>({
             {errors.expiresAt?.message as string}
           </span>
         )}
+      </div>
+
+      <div className="flex flex-col gap-y-1.5">
+        <label className="text-sm text-my-secondary">
+          Tags
+          <span className="ml-1">(Optional)</span>
+        </label>
+        <Controller
+          control={control}
+          name={"tagIds" as Path<T>}
+          render={({ field }) => {
+            const selectedTags = (field.value as string[]) || [];
+
+            return (
+              <div className="flex flex-col gap-y-2">
+                {selectedTags.length > 0 && (
+                  <div className="flex flex-wrap items-center gap-1.5">
+                    {selectedTags.map((tagId) => {
+                      const tag = tags.find((t) => t.id === tagId);
+                      return tag ? (
+                        <RemovableChip
+                          key={tag.id}
+                          label={tag.name}
+                          icon={<Tag size={12} />}
+                          onRemove={() => {
+                            field.onChange(
+                              selectedTags.filter((id) => id !== tag.id),
+                            );
+                          }}
+                        />
+                      ) : null;
+                    })}
+                  </div>
+                )}
+
+                <TagSelectDropdown
+                  value={selectedTags}
+                  onChange={field.onChange}
+                />
+              </div>
+            );
+          }}
+        />
       </div>
     </div>
   );

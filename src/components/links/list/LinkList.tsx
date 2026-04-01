@@ -36,18 +36,7 @@ export function LinkList({ initialLinks }: LinkListProps) {
         link.id === "optimistic-id" ? (
           <LinkCardSkeleton key={link.id} />
         ) : (
-          <LinkCard
-            key={link.id}
-            id={link.id}
-            shortSlug={link.shortSlug}
-            originalUrl={link.originalUrl}
-            description={link.description}
-            createdAt={link.createdAt}
-            clickCount={link.clickCount}
-            status={link.status}
-            expiresAt={link.expiresAt}
-            isActive={link.isActive}
-          />
+          <LinkCard key={link.id} {...link} />
         ),
       )}
     </div>

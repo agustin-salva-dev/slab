@@ -2,7 +2,7 @@
 
 import { useFilterStore } from "@/stores/useFilterStore";
 import { useTags } from "@/hooks/tags/useTags";
-import { FilterChip } from "../shared/FilterChip";
+import { RemovableChip } from "@/components/ui/RemovableChip";
 import { Tag } from "lucide-react";
 import { SECTION_LABELS, getChipMeta } from "../filterConfig";
 import type { ActiveFilters, FilterValue } from "@/types/filters";
@@ -37,7 +37,7 @@ export function ActiveFilterChips() {
       className="flex flex-wrap items-center gap-1.5 p-2 md:gap-2 md:p-3"
     >
       {activeChips.map(({ section, value, icon: Icon, label }) => (
-        <FilterChip
+        <RemovableChip
           key={`${section}-${value}`}
           icon={<Icon size={12} />}
           label={`${SECTION_LABELS[section]}: ${label}`}

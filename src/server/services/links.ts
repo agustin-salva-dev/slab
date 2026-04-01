@@ -23,6 +23,14 @@ export class LinksService {
         userId,
         status: LinkStatus.PENDING,
         expiresAt: values.expiresAt,
+        ...(values.tagIds &&
+          values.tagIds.length > 0 && {
+            tags: {
+              create: values.tagIds.map((tagId) => ({
+                tag: { connect: { id: tagId } },
+              })),
+            },
+          }),
       },
     });
   }
@@ -46,17 +54,36 @@ export class LinksService {
     const isFutureExpiration =
       values.expiresAt && values.expiresAt > new Date();
 
-    return await db.link.update({
-      where: {
-        id: linkId,
-      },
-      data: {
-        originalUrl: values.originalUrl,
-        shortSlug: values.shortSlug,
-        description: values.description,
-        ...(values.expiresAt !== undefined && { expiresAt: values.expiresAt }),
-        ...(isFutureExpiration && { isActive: true }),
-      },
+    return await db.$transaction(async (tx) => {
+      const updated = await tx.link.update({
+        where: { id: linkId },
+        data: {
+          originalUrl: values.originalUrl,
+          shortSlug: values.shortSlug,
+          description: values.description,
+          ...(values.expiresAt !== undefined && {
+            expiresAt: values.expiresAt,
+          }),
+          ...(isFutureExpiration && { isActive: true }),
+        },
+      });
+
+      if (values.tagIds !== undefined) {
+        await tx.linkTag.deleteMany({
+          where: { linkId },
+        });
+
+        if (values.tagIds.length > 0) {
+          await tx.linkTag.createMany({
+            data: values.tagIds.map((tagId) => ({
+              linkId,
+              tagId,
+            })),
+          });
+        }
+      }
+
+      return updated;
     });
   }
 

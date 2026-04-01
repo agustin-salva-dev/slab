@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
@@ -19,28 +19,25 @@ import { editLinkSchema, type EditLinkInput } from "@/server/schemas/link";
 import type { getUserLinks } from "@/server/queries/links";
 import { LINKS_CACHE_KEY } from "@/hooks/links/keys";
 
+import { useTags } from "@/hooks/tags/useTags";
+
 type UserLinks = Awaited<ReturnType<typeof getUserLinks>>;
+type UserLink = UserLinks[number];
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  link: {
-    id: string;
-    shortSlug: string;
-    originalUrl: string;
-    description: string | null;
-    expiresAt: Date | null;
-    isActive: boolean;
-  };
+  link: UserLink;
 }
 
 import { LinkForm } from "../form/LinkForm";
 
 export function EditLinkModal({ isOpen, onClose, link }: Props) {
   const { mutate } = useSWRConfig();
+  const { tags: availableTags } = useTags();
   const [isEnding, setIsEnding] = useState(false);
 
-  const { id, shortSlug, originalUrl, description, expiresAt } = link;
+  const { id, shortSlug, originalUrl, description, expiresAt, tags } = link;
 
   const formValues = useMemo(
     () => ({
@@ -49,8 +46,9 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
       originalUrl,
       description: description ?? "",
       expiresAt: expiresAt ? new Date(expiresAt) : null,
+      tagIds: tags?.map((t) => t.tag.id) || [],
     }),
-    [id, shortSlug, originalUrl, description, expiresAt],
+    [id, shortSlug, originalUrl, description, expiresAt, tags],
   );
 
   const form = useForm<EditLinkInput>({
@@ -63,6 +61,12 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
     reset,
     formState: { isSubmitting },
   } = form;
+
+  useEffect(() => {
+    if (isOpen) {
+      reset(formValues);
+    }
+  }, [isOpen, formValues, reset]);
 
   const handleClose = () => {
     reset();
@@ -80,18 +84,32 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
         const isFutureExpiration =
           data.expiresAt && data.expiresAt > new Date();
 
-        return currentLinks.map((l) =>
-          l.id === link.id
-            ? {
-                ...l,
-                shortSlug: data.shortSlug,
-                originalUrl: data.originalUrl,
-                description: data.description ?? null,
-                expiresAt: data.expiresAt ?? null,
-                isActive: isFutureExpiration ? true : l.isActive,
-              }
-            : l,
-        );
+        return currentLinks.map((l) => {
+          if (l.id === link.id) {
+            const optimisticTags =
+              data.tagIds && availableTags
+                ? data.tagIds
+                    .map((tagId) => {
+                      const t = availableTags.find((tag) => tag.id === tagId);
+                      return t
+                        ? { tag: { id: t.id, name: t.name, color: t.color } }
+                        : null;
+                    })
+                    .filter((t) => t !== null)
+                : [];
+
+            return {
+              ...l,
+              shortSlug: data.shortSlug,
+              originalUrl: data.originalUrl,
+              description: data.description ?? null,
+              expiresAt: data.expiresAt ?? null,
+              isActive: isFutureExpiration ? true : l.isActive,
+              tags: optimisticTags as typeof l.tags,
+            };
+          }
+          return l;
+        });
       },
       false,
     );
@@ -123,9 +141,12 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="w-4/5 md:w-md p-0 border-none bg-transparent shadow-none max-w-md">
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Card>
-            <CardHeader className="flex items-start gap-1.5">
+        <Card className="flex flex-col max-h-[90dvh] overflow-hidden">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col overflow-hidden h-full"
+          >
+            <CardHeader className="flex flex-col items-start gap-1.5 shrink-0">
               <DialogTitle className="text-xl font-power-ultra">
                 Edit my slab
               </DialogTitle>
@@ -134,11 +155,11 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
               </CardDescription>
             </CardHeader>
 
-            <CardBody className="flex flex-col gap-y-4">
+            <CardBody className="overflow-y-auto flex flex-col gap-y-4 py-2 px-6">
               <LinkForm form={form} isSubmitting={isSubmitting || isEnding} />
             </CardBody>
 
-            <CardFooter className="flex justify-end gap-x-3">
+            <CardFooter className="flex justify-end gap-x-3 shrink-0 pt-4 pb-6 px-6">
               <Button
                 type="button"
                 variant="outline"
@@ -158,8 +179,8 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
                 {isSubmitting || isEnding ? "Saving..." : "Save changes"}
               </Button>
             </CardFooter>
-          </Card>
-        </form>
+          </form>
+        </Card>
       </DialogContent>
     </Dialog>
   );

@@ -13,16 +13,6 @@ import {
   CardFooter,
   CardHeader,
 } from "@/components/ui/Card";
-{
-  /* import {
-        Select,
-        SelectContent,
-        SelectGroup,
-        SelectItem,
-        SelectTrigger,
-        SelectValue,
-    } from "@/components/ui/Select"; */
-}
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { createLinkSchema, type CreateLinkInput } from "@/server/schemas/link";
@@ -32,6 +22,7 @@ import { LinkStatus } from "@prisma/client";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { LinkForm } from "../form/LinkForm";
+import { useTags } from "@/hooks/tags/useTags";
 
 interface Props {
   isOpen: boolean;
@@ -40,6 +31,8 @@ interface Props {
 
 export default function CreateLinkModal({ isOpen, onClose }: Props) {
   const { mutate } = useSWRConfig();
+  const { tags: availableTags } = useTags();
+
   const form = useForm<CreateLinkInput>({
     resolver: zodResolver(createLinkSchema),
     defaultValues: {
@@ -60,6 +53,18 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
       ? values.expiresAt > new Date()
       : true;
 
+    const optimisticTags =
+      values.tagIds && availableTags
+        ? values.tagIds
+            .map((tagId) => {
+              const t = availableTags.find((tag) => tag.id === tagId);
+              return t
+                ? { tag: { id: t.id, name: t.name, color: t.color } }
+                : null;
+            })
+            .filter((t) => t !== null)
+        : [];
+
     const optimisticLink = {
       id: "optimistic-id",
       shortSlug: values.shortSlug || "...",
@@ -70,7 +75,7 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
       status: "PENDING" as LinkStatus,
       expiresAt: values.expiresAt || null,
       isActive: isFutureExpiration,
-      tags: [],
+      tags: optimisticTags as UserLinks[number]["tags"],
     };
 
     mutate(
@@ -111,42 +116,50 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="w-4/5 md:w-md p-0 border-none bg-transparent shadow-none max-w-md">
-        <Card>
-          <CardHeader className="flex items-center gap-2.5">
-            <div className="flex items-center gap-2.5">
-              <DialogTitle className="text-2xl font-power-ultra">
-                Create new link
-              </DialogTitle>
-              <Image src="/logo.webp" alt="Slab Logo" width={25} height={25} />
-            </div>
-            <CardDescription className="text-center">
-              We will analyze the destination link to verify if it is secure.
-            </CardDescription>
-          </CardHeader>
-          <CardBody className="flex flex-col gap-y-4">
-            <form onSubmit={handleSubmit(onSubmit)}>
+        <Card className="flex flex-col max-h-[90dvh] overflow-hidden">
+          <form
+            onSubmit={handleSubmit(onSubmit)}
+            className="flex flex-col overflow-hidden h-full"
+          >
+            <CardHeader className="flex items-center gap-2.5 shrink-0">
+              <div className="flex items-center gap-2.5">
+                <DialogTitle className="text-2xl font-power-ultra">
+                  Create new link
+                </DialogTitle>
+                <Image
+                  src="/logo.webp"
+                  alt="Slab Logo"
+                  width={25}
+                  height={25}
+                />
+              </div>
+              <CardDescription className="text-center">
+                We will analyze the destination link to verify if it is secure.
+              </CardDescription>
+            </CardHeader>
+            <CardBody className="overflow-y-auto py-2 px-6">
               <div className="flex flex-col gap-y-4">
                 <LinkForm form={form} isSubmitting={isSubmitting} />
               </div>
-              <CardFooter className="flex justify-end gap-x-4">
-                <Button
-                  variant="outline"
-                  className="cursor-pointer"
-                  disabled={isSubmitting}
-                  onClick={() => onClose()}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="submit"
-                  className="cursor-pointer"
-                  disabled={isSubmitting}
-                >
-                  {isSubmitting ? "Creating..." : "Create"}
-                </Button>
-              </CardFooter>
-            </form>
-          </CardBody>
+            </CardBody>
+            <CardFooter className="flex justify-end gap-x-4 shrink-0 pt-4 pb-6 px-6">
+              <Button
+                variant="outline"
+                className="cursor-pointer"
+                disabled={isSubmitting}
+                onClick={() => onClose()}
+              >
+                Cancel
+              </Button>
+              <Button
+                type="submit"
+                className="cursor-pointer"
+                disabled={isSubmitting}
+              >
+                {isSubmitting ? "Creating..." : "Create"}
+              </Button>
+            </CardFooter>
+          </form>
         </Card>
       </DialogContent>
     </Dialog>

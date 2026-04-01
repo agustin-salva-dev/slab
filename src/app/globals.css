@@ -9,6 +9,8 @@
 @variant dark (&:where(.dark, .dark *));
 
 @theme {
+  --spacing-9/10: 90dvh;
+
   --animate-accordion-down: accordion-down 0.2s ease-out;
   --animate-accordion-up: accordion-up 0.2s ease-out;
   --animate-scale-in: scale-in 0.2s ease;

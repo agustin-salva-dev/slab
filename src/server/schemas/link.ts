@@ -19,6 +19,7 @@ export const createLinkSchema = z.object({
     .optional(),
 
   expiresAt: z.date().optional().nullable(),
+  tagIds: z.array(z.string()).optional(),
 });
 
 export type CreateLinkInput = z.infer<typeof createLinkSchema>;
@@ -42,6 +43,7 @@ export const editLinkSchema = z.object({
     .or(z.literal("")),
 
   expiresAt: z.date().optional().nullable(),
+  tagIds: z.array(z.string()).optional(),
 });
 
 export type EditLinkInput = z.infer<typeof editLinkSchema>;
