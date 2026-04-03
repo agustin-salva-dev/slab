@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Card, CardBody } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
 import { DeleteLinkModal } from "../modals/DeleteLinkModal";
 import { EditLinkModal } from "../modals/EditLinkModal";
 import { DisableLinkModal } from "../modals/DisableLinkModal";
@@ -24,18 +25,9 @@ import {
 import { Separator } from "@/components/ui/Separator";
 import { Callout, CalloutText } from "@/components/ui/Callout";
 import { LinkStatus } from "@prisma/client";
+import type { getUserLinks } from "@/server/queries/links";
 
-interface LinkCardProps {
-  id: string;
-  shortSlug: string;
-  originalUrl: string;
-  description?: string | null;
-  createdAt: Date;
-  clickCount: number;
-  status: LinkStatus;
-  expiresAt?: Date | null;
-  isActive: boolean;
-}
+type LinkCardProps = Awaited<ReturnType<typeof getUserLinks>>[number];
 
 export function LinkCard({
   id,
@@ -47,6 +39,7 @@ export function LinkCard({
   status,
   expiresAt,
   isActive,
+  tags,
 }: LinkCardProps) {
   const [copied, setCopied] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
@@ -105,6 +98,17 @@ export function LinkCard({
                 This link was rejected. It may contain unsafe content.
               </CalloutText>
             </Callout>
+          )}
+
+          {/* TAGS SECTION */}
+          {tags.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2">
+              {tags.map(({ tag }) => (
+                <Badge key={tag.id} variant="default" dynamicColor={tag.color}>
+                  {tag.name}
+                </Badge>
+              ))}
+            </div>
           )}
 
           <section className="flex justify-between items-center">
@@ -219,6 +223,10 @@ export function LinkCard({
           description: description ?? null,
           expiresAt: expiresAt ?? null,
           isActive,
+          tags,
+          createdAt,
+          clickCount,
+          status,
         }}
       />
       <DisableLinkModal

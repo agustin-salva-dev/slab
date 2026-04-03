@@ -20,6 +20,7 @@ model User {
   sessions      Session[]
   accounts      Account[]
   links         Link[]
+  tags          Tag[]
 }
 
 model Session {
@@ -88,6 +89,7 @@ model Link {
   
   clickCount   Int      @default(0)
   clicks        Click[]
+  tags          LinkTag[]
   createdAt     DateTime  @default(now())
 }
 
@@ -103,4 +105,29 @@ model Click {
   @@index([linkId, timestamp])
   @@index([linkId, device])
   @@index([linkId, country])
+}
+
+model Tag {
+  id        String    @id @default(cuid())
+  name      String
+  color     String?
+  userId    String
+  user      User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+
+  links     LinkTag[]
+
+  @@unique([name, userId])
+  @@index([userId])
+}
+
+model LinkTag {
+  linkId    String
+  link      Link      @relation(fields: [linkId], references: [id], onDelete: Cascade)
+  tagId     String
+  tag       Tag       @relation(fields: [tagId], references: [id], onDelete: Cascade)
+  createdAt DateTime  @default(now())
+
+  @@id([linkId, tagId])
+  @@index([tagId])
 }
