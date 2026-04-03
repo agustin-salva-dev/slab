@@ -1,7 +1,7 @@
 "use client";
 
 import { useFilterStore } from "@/stores/useFilterStore";
-import { TagListOptions } from "@/components/tags/TagListOptions";
+import { TagListOptions } from "@/components/tags/list/TagListOptions";
 
 export function TagFilterSection() {
   const { activeFilters, toggleFilter } = useFilterStore();

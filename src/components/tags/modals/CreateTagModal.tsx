@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from "react-hook-form";
+import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import {
@@ -15,6 +15,7 @@ import { Input } from "@/components/ui/Input";
 import { createTagSchema, type CreateTagInput } from "@/server/schemas/tags";
 import { useCreateTag } from "@/hooks/tags/useCreateTag";
 import { Tag } from "lucide-react";
+import { TagColorPicker } from "../form/TagColorPicker";
 
 interface Props {
   isOpen: boolean;
@@ -32,6 +33,7 @@ export default function CreateTagModal({ isOpen, onClose }: Props) {
   const {
     register,
     handleSubmit,
+    control,
     reset,
     formState: { errors },
   } = form;
@@ -41,7 +43,9 @@ export default function CreateTagModal({ isOpen, onClose }: Props) {
   const onSubmit = async (values: CreateTagInput) => {
     await handleCreate(values, () => {
       onClose();
-      reset();
+      reset({
+        name: "",
+      });
     });
   };
 
@@ -77,6 +81,26 @@ export default function CreateTagModal({ isOpen, onClose }: Props) {
                   {errors.name && (
                     <span className="text-sm text-my-accents-red">
                       {errors.name.message as string}
+                    </span>
+                  )}
+                </div>
+
+                <div className="flex flex-col gap-y-1.5 mt-2">
+                  <label className="text-sm text-my-secondary">Tag Color</label>
+                  <Controller
+                    control={control}
+                    name="color"
+                    render={({ field }) => (
+                      <TagColorPicker
+                        value={field.value}
+                        onChange={field.onChange}
+                        disabled={isCreating}
+                      />
+                    )}
+                  />
+                  {errors.color && (
+                    <span className="text-sm text-my-accents-red">
+                      {errors.color.message as string}
                     </span>
                   )}
                 </div>

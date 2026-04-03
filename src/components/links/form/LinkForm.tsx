@@ -11,7 +11,7 @@ import { DatePicker } from "@/components/ui/DatePicker";
 import { Controller } from "react-hook-form";
 import { Tag } from "lucide-react";
 import { RemovableChip } from "@/components/ui/RemovableChip";
-import { TagSelectDropdown } from "@/components/tags/TagSelectDropdown";
+import { TagSelectDropdown } from "@/components/tags/list/TagSelectDropdown";
 import { useTags } from "@/hooks/tags/useTags";
 
 interface LinkFormProps<T extends FieldValues> {

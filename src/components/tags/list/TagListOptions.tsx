@@ -3,7 +3,7 @@
 import { Loader2, Tag } from "lucide-react";
 import { useTags } from "@/hooks/tags/useTags";
 import { useState } from "react";
-import { DeleteTagModal } from "@/components/tags/DeleteTagModal";
+import { DeleteTagModal } from "@/components/tags/modals/DeleteTagModal";
 import { FilterItem } from "@/components/filters/shared/FilterItem";
 import { SectionLabel } from "@/components/filters/shared/SectionLabel";
 
@@ -58,6 +58,7 @@ export function TagListOptions({
               onToggle={() => onToggle(tag.id)}
               onDelete={() => onDeleteClick(tag.id, tag.name)}
               isDeleting={false}
+              dynamicColor={tag.color}
             />
           );
         })

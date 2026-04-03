@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { BadgePlus } from "lucide-react";
 import React, { useState } from "react";
-import CreateTagModal from "@/components/tags/CreateTagModal";
+import CreateTagModal from "@/components/tags/modals/CreateTagModal";
 import { TagListOptions } from "./TagListOptions";
 import { cn } from "@/utils/tailwind";
 

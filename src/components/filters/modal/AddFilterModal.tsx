@@ -9,7 +9,7 @@ import {
 import { Button } from "@/components/ui/Button";
 import { BadgePlus, Eraser } from "lucide-react";
 import React, { useState } from "react";
-import CreateTagModal from "@/components/tags/CreateTagModal";
+import CreateTagModal from "@/components/tags/modals/CreateTagModal";
 import { useFilterStore } from "@/stores/useFilterStore";
 import type { FilterValue } from "@/types/filters";
 import { FILTER_SECTIONS } from "../filterConfig";

@@ -5,6 +5,9 @@ import { deleteTag } from "@/server/actions/tags";
 import { TAGS_CACHE_KEY } from "./keys";
 import { useFilterStore } from "@/stores/useFilterStore";
 import type { Tag } from "@prisma/client";
+import type { getUserLinks } from "@/server/queries/links";
+
+type UserLinks = Awaited<ReturnType<typeof getUserLinks>>;
 
 export function useDeleteTag() {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -16,6 +19,19 @@ export function useDeleteTag() {
       TAGS_CACHE_KEY,
       (currentTags: Tag[] | undefined) =>
         (currentTags || []).filter((tag) => tag.id !== tagId),
+      false,
+    );
+
+    // Optimistic update for links to remove the deleted tag instantly
+    mutate(
+      "user-links",
+      (currentLinks: UserLinks | undefined) => {
+        if (!currentLinks) return currentLinks;
+        return currentLinks.map((link) => ({
+          ...link,
+          tags: link.tags.filter((t) => t.tag.id !== tagId),
+        }));
+      },
       false,
     );
 

@@ -18,15 +18,18 @@ export function ActiveFilterChips() {
       let label = "";
       let icon = getChipMeta(section, value).icon;
 
+      let color: string | null = null;
+
       if (section === "tags") {
         const tag = tags.find((t) => t.id === value);
         label = tag ? tag.name : isLoading ? "..." : "Tag";
         icon = Tag;
+        color = tag?.color ?? null;
       } else {
         label = getChipMeta(section, value).label;
       }
 
-      return { section, value, icon, label };
+      return { section, value, icon, label, color };
     }),
   );
 
@@ -36,12 +39,13 @@ export function ActiveFilterChips() {
       aria-label="Active filters"
       className="flex flex-wrap items-center gap-1.5 p-2 md:gap-2 md:p-3"
     >
-      {activeChips.map(({ section, value, icon: Icon, label }) => (
+      {activeChips.map(({ section, value, icon: Icon, label, color }) => (
         <RemovableChip
           key={`${section}-${value}`}
           icon={<Icon size={12} />}
           label={`${SECTION_LABELS[section]}: ${label}`}
           onRemove={() => removeFilter(section, value)}
+          dynamicColor={color}
         />
       ))}
     </div>

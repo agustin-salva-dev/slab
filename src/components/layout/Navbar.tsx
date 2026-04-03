@@ -29,7 +29,7 @@ export default function Navbar() {
         <p className="font-power-med text-white">
           New:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            Create custom tags for your links (Mar 23)
+            Attach colored tags to links (Apr 03)
           </span>
         </p>
       </ExternalLink>

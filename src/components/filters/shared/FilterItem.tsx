@@ -11,6 +11,7 @@ interface FilterItemProps {
   onToggle?: () => void;
   onDelete?: () => void;
   isDeleting?: boolean;
+  dynamicColor?: string | null;
 }
 
 export function FilterItem({
@@ -21,6 +22,7 @@ export function FilterItem({
   onToggle,
   onDelete,
   isDeleting = false,
+  dynamicColor,
 }: FilterItemProps) {
   return (
     <DropdownMenuItem
@@ -35,7 +37,16 @@ export function FilterItem({
       }}
     >
       <div
-        className="text-white [&>svg]:size-4 md:[&>svg]:size-5"
+        className={
+          dynamicColor
+            ? "text-(--tag-color) [&>svg]:size-4 md:[&>svg]:size-5"
+            : "text-white [&>svg]:size-4 md:[&>svg]:size-5"
+        }
+        style={
+          dynamicColor
+            ? ({ "--tag-color": `var(${dynamicColor})` } as React.CSSProperties)
+            : undefined
+        }
         aria-hidden="true"
       >
         <Icon />
@@ -51,7 +62,7 @@ export function FilterItem({
             onDelete();
           }}
           disabled={isDeleting}
-          className="text-my-secondary hover:text-my-accents-red opacity-0 group-hover:opacity-100 transition-opacity disabled:opacity-100 focus:opacity-100 cursor-pointer"
+          className="text-my-secondary hover:text-my-accents-red opacity-100 md:opacity-0 md:group-hover:opacity-100 transition-opacity disabled:opacity-100 focus:opacity-100 cursor-pointer"
           aria-label={`Delete tag ${label}`}
         >
           {isDeleting ? (

@@ -1,10 +1,11 @@
 import { z } from "zod";
+import { TAG_COLORS } from "@/constants/tags";
 
 export const createTagSchema = z.object({
   name: z.string().min(1, { message: "Tag name cannot be empty." }).max(15, {
     message: "Tag name cannot exceed 15 characters.",
   }),
-  color: z.string().optional(),
+  color: z.enum(TAG_COLORS).optional(),
 });
 
 export type CreateTagInput = z.infer<typeof createTagSchema>;

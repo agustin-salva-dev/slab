@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Card, CardBody } from "@/components/ui/Card";
+import { Badge } from "@/components/ui/Badge";
 import { DeleteLinkModal } from "../modals/DeleteLinkModal";
 import { EditLinkModal } from "../modals/EditLinkModal";
 import { DisableLinkModal } from "../modals/DisableLinkModal";
@@ -97,6 +98,17 @@ export function LinkCard({
                 This link was rejected. It may contain unsafe content.
               </CalloutText>
             </Callout>
+          )}
+
+          {/* TAGS SECTION */}
+          {tags.length > 0 && (
+            <div className="flex flex-wrap items-center gap-2">
+              {tags.map(({ tag }) => (
+                <Badge key={tag.id} variant="default" dynamicColor={tag.color}>
+                  {tag.name}
+                </Badge>
+              ))}
+            </div>
           )}
 
           <section className="flex justify-between items-center">
