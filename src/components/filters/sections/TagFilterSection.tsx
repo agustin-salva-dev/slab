@@ -11,7 +11,7 @@ export function TagFilterSection() {
     <TagListOptions
       selectedTagIds={selectedTagIds}
       onToggle={(tagId) => toggleFilter("tags", tagId)}
-      showSectionLabel={true}
+      showSectionLabel={false}
     />
   );
 }

@@ -42,4 +42,6 @@ next-env.d.ts
 
 /src/generated/prisma
 
+/.agents
 /.agents/rules
+/.agents/workflows

@@ -3,12 +3,12 @@ import { Button } from "@/components/ui/Button";
 import { SearchBar } from "@/components/ui/SearchBar";
 import { ChevronDown } from "lucide-react";
 /**
- * TODO LATER: Toggle sort order (Newest to Oldest / Oldest to Newest) - FURTHER DOWN THE ROAD.
+ * TODO: Toggle sort order (Newest to Oldest / Oldest to Newest) - FURTHER DOWN THE ROAD.
  * import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
  */
 import { CreateLinkButton } from "@/components/links/list/CreateLinkButton";
 import { Suspense } from "react";
-import { AddFilterModal } from "@/components/filters/modal/AddFilterModal";
+import { AddFilterDropdown } from "@/components/filters/dropdown/AddFilterDropdown";
 import { LinkListContainer } from "@/components/links/list/LinkListContainer";
 import { LinkCardSkeleton } from "@/components/links/card/LinkCardSkeleton";
 
@@ -56,7 +56,7 @@ export default function Dashboard() {
             </TabsList>
           </Tabs> */}
 
-          <AddFilterModal>
+          <AddFilterDropdown>
             <Button
               variant="outline"
               subject="text-icon"
@@ -66,8 +66,8 @@ export default function Dashboard() {
               Filters
               <ChevronDown size={15} className="fill-my-secondary" />
             </Button>
-          </AddFilterModal>
-          <AddFilterModal>
+          </AddFilterDropdown>
+          <AddFilterDropdown>
             <Button
               variant="outline"
               subject="text-icon"
@@ -77,7 +77,7 @@ export default function Dashboard() {
               Filters
               <ChevronDown size={15} className="fill-my-secondary" />
             </Button>
-          </AddFilterModal>
+          </AddFilterDropdown>
         </section>
       </div>
       <Suspense fallback={<SkeletonsFallback />}>

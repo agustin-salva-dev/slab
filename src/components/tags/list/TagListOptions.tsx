@@ -4,8 +4,8 @@ import { Loader2, Tag } from "lucide-react";
 import { useTags } from "@/hooks/tags/useTags";
 import { useState } from "react";
 import { DeleteTagModal } from "@/components/tags/modals/DeleteTagModal";
-import { FilterItem } from "@/components/filters/shared/FilterItem";
-import { SectionLabel } from "@/components/filters/shared/SectionLabel";
+import { FilterItem } from "@/components/filters/ui/FilterItem";
+import { SectionLabel } from "@/components/filters/ui/SectionLabel";
 
 interface TagListOptionsProps {
   selectedTagIds: string[];
