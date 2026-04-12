@@ -6,6 +6,7 @@ import { getUserLinks } from "@/server/queries/links";
 import { LinkCardSkeleton } from "../card/LinkCardSkeleton";
 import { EmptyLinkList } from "./EmptyLinkList";
 import { useFilteredLinks } from "@/hooks/links/useFilteredLinks";
+import { useFilterStore } from "@/stores/useFilterStore";
 import { SearchX } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
@@ -23,11 +24,17 @@ export function LinkList({ initialLinks }: LinkListProps) {
   });
 
   const { filteredLinks, clearAllFilters } = useFilteredLinks(links);
+  const { searchQuery } = useFilterStore();
 
   if (!links || links.length === 0) return <EmptyLinkList />;
 
   if (filteredLinks.length === 0) {
-    return <EmptyFilterResult onClear={clearAllFilters} />;
+    return (
+      <EmptyFilterResult
+        onClear={clearAllFilters}
+        hasSearch={!!searchQuery.trim()}
+      />
+    );
   }
 
   return (
@@ -43,16 +50,26 @@ export function LinkList({ initialLinks }: LinkListProps) {
   );
 }
 
-function EmptyFilterResult({ onClear }: { onClear: () => void }) {
+function EmptyFilterResult({
+  onClear,
+  hasSearch,
+}: {
+  onClear: () => void;
+  hasSearch: boolean;
+}) {
   return (
     <div className="flex flex-col items-center justify-center gap-4 py-20 text-center">
       <SearchX size={40} className="text-my-secondary" aria-hidden="true" />
       <div>
         <p className="text-sm font-medium text-white md:text-base">
-          No links match your filters
+          {hasSearch
+            ? "No links match your search"
+            : "No links match your filters"}
         </p>
         <p className="text-xs text-my-secondary mt-1 md:text-sm">
-          Try removing some filters to see more results
+          {hasSearch
+            ? "Try a different search term or remove some filters"
+            : "Try removing some filters to see more results"}
         </p>
       </div>
       <Button
@@ -61,7 +78,7 @@ function EmptyFilterResult({ onClear }: { onClear: () => void }) {
         className="cursor-pointer md:size-auto md:h-10 md:rounded-2 md:px-3.5 md:text-3.5"
         onClick={onClear}
       >
-        Clear filters
+        {hasSearch ? "Clear search & filters" : "Clear filters"}
       </Button>
     </div>
   );

@@ -81,7 +81,7 @@ export async function getTopCountriesStats(options?: {
 
 // ─── Private Data Layer ──────────────────────────────────────────────────────
 
-// Groups clicks by linkId, uses composite indexes [linkId, timestamp/device/country]
+// Groups clicks by linkId
 async function fetchGroupedClicks(
   userId: string,
   options?: {
@@ -107,27 +107,24 @@ async function fetchGroupedClicks(
   });
 }
 
-// Fetches link metadata (title, slug) as a Map for O(1) lookups
+// Fetches link metadata
 async function fetchLinkDetailsMap(linkIds: string[]) {
   const links = await db.link.findMany({
     where: { id: { in: linkIds } },
-    select: { id: true, title: true, shortSlug: true },
+    select: { id: true, shortSlug: true },
   });
   return new Map(links.map((l) => [l.id, l]));
 }
 
-// Merges click counts with link metadata into the response shape
+// Merges click counts with link metadata into the response
 function assembleLinkStats(
   groupedClicks: { linkId: string; _count: { linkId: number } }[],
-  linksMap: Map<
-    string,
-    { id: string; title: string | null; shortSlug: string | null }
-  >,
+  linksMap: Map<string, { id: string; shortSlug: string }>,
 ): LinkClickStat[] {
   return groupedClicks.map((g) => {
     const link = linksMap.get(g.linkId);
     return {
-      title: link?.title || link?.shortSlug || g.linkId,
+      title: link?.shortSlug ?? g.linkId,
       shortSlug: link?.shortSlug ?? "",
       clickCount: g._count.linkId,
     };
@@ -162,7 +159,6 @@ async function fetchTopCountries(
 }
 
 // Raw SQL
-// Returns bigint for clicks — must convert with Number() in the assembly step
 async function fetchRankedLinksByCountry(
   userId: string,
   countryCodes: string[],
@@ -177,8 +173,7 @@ async function fetchRankedLinksByCountry(
     {
       country: string;
       linkId: string;
-      title: string | null;
-      shortSlug: string | null;
+      shortSlug: string;
       clicks: bigint;
     }[]
   >(Prisma.sql`
@@ -186,7 +181,6 @@ async function fetchRankedLinksByCountry(
       SELECT 
           C.country,
           C."linkId",
-          L.title,
           L."shortSlug",
           COUNT(C.id) as clicks,
           ROW_NUMBER() OVER(PARTITION BY C.country ORDER BY COUNT(C.id) DESC) as rn
@@ -196,9 +190,9 @@ async function fetchRankedLinksByCountry(
       AND C.country IN (${Prisma.join(countryCodes)})
       ${from ? Prisma.sql`AND C.timestamp >= ${from}` : Prisma.empty}
       ${to ? Prisma.sql`AND C.timestamp <= ${to}` : Prisma.empty}
-      GROUP BY C.country, C."linkId", L.title, L."shortSlug"
+      GROUP BY C.country, C."linkId", L."shortSlug"
     )
-    SELECT country, "linkId", title, "shortSlug", clicks
+    SELECT country, "linkId", "shortSlug", clicks
     FROM RankedClicks
     WHERE rn <= ${linkLimitPerCountry}
     ORDER BY country, clicks DESC;
@@ -211,8 +205,7 @@ function assembleCountryStats(
   rankedLinks: {
     country: string;
     linkId: string;
-    title: string | null;
-    shortSlug: string | null;
+    shortSlug: string;
     clicks: bigint;
   }[],
 ): CountryWithLinks[] {
@@ -225,8 +218,8 @@ function assembleCountryStats(
       country: countryData.country,
       totalCountryClicks: countryData.clickCount,
       topLinks: linksForCountry.map((link) => ({
-        title: link.title || link.shortSlug || link.linkId,
-        shortSlug: link.shortSlug ?? "",
+        title: link.shortSlug,
+        shortSlug: link.shortSlug,
         clickCount: Number(link.clicks),
       })),
     };

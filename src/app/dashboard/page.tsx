@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import { Button } from "@/components/ui/Button";
-import { SearchBar } from "@/components/ui/SearchBar";
 import { ChevronDown } from "lucide-react";
 /**
  * TODO: Toggle sort order (Newest to Oldest / Oldest to Newest) - FURTHER DOWN THE ROAD.
  * import { Tabs, TabsList, TabsTrigger } from "@/components/ui/Tabs";
  */
 import { CreateLinkButton } from "@/components/links/list/CreateLinkButton";
+import { LinkSearchBar } from "@/components/links/list/LinkSearchBar";
 import { Suspense } from "react";
 import { AddFilterDropdown } from "@/components/filters/dropdown/AddFilterDropdown";
 import { LinkListContainer } from "@/components/links/list/LinkListContainer";
@@ -31,18 +31,7 @@ export default function Dashboard() {
   return (
     <>
       <div className="flex flex-col md:flex-row gap-8 md:justify-between w-full ">
-        <SearchBar
-          type="email"
-          placeholder="Search links"
-          inputSize="sm"
-          className="hidden md:flex w-xs"
-        />
-        <SearchBar
-          type="email"
-          placeholder="Search links"
-          inputSize="xs"
-          className="flex md:hidden w-full"
-        />
+        <LinkSearchBar />
         <section className="flex justify-between md:gap-6">
           <CreateLinkButton />
 

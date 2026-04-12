@@ -3,6 +3,8 @@ import type { ActiveFilters, FilterValue } from "@/types/filters";
 
 interface FilterStore {
   activeFilters: ActiveFilters;
+  searchQuery: string;
+  setSearchQuery: (query: string) => void;
   toggleFilter: (section: keyof ActiveFilters, value: FilterValue) => void;
   removeFilter: (section: keyof ActiveFilters, value: FilterValue) => void;
   clearAllFilters: () => void;
@@ -17,6 +19,8 @@ const INITIAL_FILTERS: ActiveFilters = {
 
 export const useFilterStore = create<FilterStore>((set, get) => ({
   activeFilters: INITIAL_FILTERS,
+  searchQuery: "",
+  setSearchQuery: (query) => set({ searchQuery: query }),
 
   toggleFilter: (section, value) =>
     set((state) => {
@@ -43,7 +47,8 @@ export const useFilterStore = create<FilterStore>((set, get) => ({
       },
     })),
 
-  clearAllFilters: () => set({ activeFilters: INITIAL_FILTERS }),
+  clearAllFilters: () =>
+    set({ activeFilters: INITIAL_FILTERS, searchQuery: "" }),
 
   hasActiveFilters: () => {
     const { activeFilters } = get();

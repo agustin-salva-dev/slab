@@ -6,6 +6,8 @@ import {
 } from "@/utils/filters/dateFilters";
 
 interface LinkWithDates {
+  shortSlug: string;
+  description?: string | null;
   createdAt: Date | string;
   expiresAt: Date | string | null;
   tags?: {
@@ -18,7 +20,9 @@ interface LinkWithDates {
 export function useFilteredLinks<T extends LinkWithDates>(
   links: T[] | undefined,
 ) {
-  const { activeFilters, clearAllFilters, hasActiveFilters } = useFilterStore();
+  const { activeFilters, searchQuery, clearAllFilters, hasActiveFilters } =
+    useFilterStore();
+  const normalizedQuery = searchQuery.trim().toLowerCase();
 
   const filteredLinks = useMemo(() => {
     if (!links) return [];
@@ -27,7 +31,12 @@ export function useFilteredLinks<T extends LinkWithDates>(
     const hasExpiresFilters = activeFilters.expires.length > 0;
     const hasTagsFilters = activeFilters.tags.length > 0;
 
-    if (!hasCreatedFilters && !hasExpiresFilters && !hasTagsFilters)
+    if (
+      !hasCreatedFilters &&
+      !hasExpiresFilters &&
+      !hasTagsFilters &&
+      !normalizedQuery
+    )
       return links;
 
     return links.filter((link) => {
@@ -47,9 +56,20 @@ export function useFilteredLinks<T extends LinkWithDates>(
             (activeFilters.tags as string[]).includes(tagItem.tag.id),
           ));
 
-      return matchesCreated && matchesExpires && matchesTags;
+      const matchesSearch =
+        !normalizedQuery ||
+        link.shortSlug.toLowerCase().includes(normalizedQuery) ||
+        (link.description?.toLowerCase().includes(normalizedQuery) ?? false);
+
+      return matchesCreated && matchesExpires && matchesTags && matchesSearch;
     });
-  }, [links, activeFilters.created, activeFilters.expires, activeFilters.tags]);
+  }, [
+    links,
+    activeFilters.created,
+    activeFilters.expires,
+    activeFilters.tags,
+    normalizedQuery,
+  ]);
 
   return { filteredLinks, clearAllFilters, hasActiveFilters };
 }

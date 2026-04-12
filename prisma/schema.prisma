@@ -76,7 +76,6 @@ model Link {
   id            String    @id @default(cuid())
   shortSlug     String    @unique 
   originalUrl   String
-  title         String?   
   description   String?
 
   status        LinkStatus @default(PENDING)
