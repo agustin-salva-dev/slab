@@ -29,7 +29,7 @@ export default function Navbar() {
         <p className="font-power-med text-white">
           New:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            Filter links by tags (Apr 05)
+            SearchBar enabled! Find links by title or description (Apr 11)
           </span>
         </p>
       </ExternalLink>
