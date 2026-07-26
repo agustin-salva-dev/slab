@@ -20,7 +20,6 @@ const APP_VERSION = "v0.18.2";
 export default function Footer() {
   const [activeIndex, setActiveIndex] = useState(0);
 
-  // The sections to be displayed
   const sections = [
     <section key="made-by" className="flex items-center gap-3.5">
       <MessageCircleHeart className="text-my-accents-red" size={20} />
@@ -37,7 +36,7 @@ export default function Footer() {
 
     <section
       key="socials"
-      className="flex items-center gap-6 2xl:gap-12 text-my-secondary"
+      className="flex items-center gap-3 xl:gap-4 2xl:gap-10 text-my-secondary"
     >
       <ExternalLink
         href="githubProfile"
@@ -58,8 +57,11 @@ export default function Footer() {
       </ExternalLink>
     </section>,
 
-    <section key="status" className="flex items-center gap-6 2xl:gap-12">
-      <div className="flex items-center gap-3.5">
+    <section
+      key="status"
+      className="flex items-center gap-3 xl:gap-4 2xl:gap-10"
+    >
+      <div className="flex items-center gap-2.5">
         <Squircle className="fill-my-accents-yellow stroke-0 size-3 shrink-0" />
         <p className="truncate">
           Status{" "}
@@ -118,7 +120,6 @@ export default function Footer() {
         </button>
       </div>
 
-      {/* Desktop view (All sections) */}
       <div className="hidden xl:flex w-full items-center justify-between">
         {sections.map((section, index) => (
           <div key={index}>{section}</div>

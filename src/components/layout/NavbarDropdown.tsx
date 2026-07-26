@@ -87,7 +87,7 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
         <DropdownMenuContent
           align="end"
           sideOffset={36}
-          className="w-[240px] shadow-2xl shadow-black/80 backdrop-blur-xl bg-black/30"
+          className="w-60 shadow-2xl shadow-black/80 backdrop-blur-xl bg-black/50"
         >
           {user ? (
             <DropdownMenuLabel className="flex items-center gap-3 py-2">
@@ -213,7 +213,6 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
           )}
           <DropdownMenuSeparator />
 
-          {/* Resources & Support */}
           <DropdownMenuItem asChild>
             <Link
               href={SITE_LINKS.reportBug}
@@ -275,10 +274,9 @@ export function NavbarDropdown({ trigger }: { trigger?: React.ReactNode }) {
           </DropdownMenuItem>
           <DropdownMenuSeparator />
 
-          {/* Social / Projects */}
           <DropdownMenuItem asChild>
             <a
-              href={SITE_LINKS.xProfile}
+              href={SITE_LINKS.linkedin}
               target="_blank"
               rel="noreferrer"
               className="cursor-pointer flex items-center gap-3 group"

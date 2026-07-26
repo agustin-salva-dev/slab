@@ -3,7 +3,7 @@ export const SITE_LINKS = {
   githubRepo: "https://github.com/agustin-salva-dev/slab",
   githubIssues: "https://github.com/agustin-salva-dev/slab/issues/new",
   githubProjects: "https://github.com/agustin-salva-dev?tab=repositories",
-  linkedin: "https://www.linkedin.com/in/agustin-salva-dev/",
+  linkedin: "https://www.linkedin.com/in/emiliano-agustin-salva/",
   xProfile: "https://x.com/agvsdev",
   latestFeature:
     "https://github.com/agustin-salva-dev/slab/commit/941d5a7949de4324abeae9730c8d75c5d5f60dbf",
