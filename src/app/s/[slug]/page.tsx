@@ -25,17 +25,31 @@ export default async function RedirectPage({
 
   const reqHeaders = await headers();
 
-  const country = reqHeaders.get("x-vercel-ip-country") || "Unknown";
-  const rawUserAgent = reqHeaders.get("user-agent") || "";
+  const purpose = reqHeaders.get("purpose")?.toLowerCase() || "";
+  const xPurpose = reqHeaders.get("x-purpose")?.toLowerCase() || "";
+  const secPurpose = reqHeaders.get("sec-purpose")?.toLowerCase() || "";
+  const isMiddlewarePrefetch = reqHeaders.get("x-middleware-prefetch") === "1";
 
-  void inngest.send({
-    name: "link/click.recorded",
-    data: {
-      linkId: link.id,
-      country,
-      rawUserAgent,
-    },
-  });
+  const isPrefetch =
+    isMiddlewarePrefetch ||
+    purpose.includes("prefetch") ||
+    xPurpose.includes("prefetch") ||
+    secPurpose.includes("prefetch") ||
+    secPurpose.includes("preview");
+
+  if (!isPrefetch) {
+    const country = reqHeaders.get("x-vercel-ip-country") || "Unknown";
+    const rawUserAgent = reqHeaders.get("user-agent") || "";
+
+    void inngest.send({
+      name: "link/click.recorded",
+      data: {
+        linkId: link.id,
+        country,
+        rawUserAgent,
+      },
+    });
+  }
 
   const destination = link.originalUrl.startsWith("http")
     ? link.originalUrl
