@@ -44,6 +44,11 @@ jobs:
       - name: Run unit tests (Vitest)
         run: pnpm test:run
 
+      - name: Run integration tests (Vitest)
+        env:
+          DATABASE_URL: ${{ secrets.DATABASE_URL }}
+        run: pnpm test:integration
+
   e2e:
     name: E2E Tests (Playwright / Chromium)
     runs-on: ubuntu-latest
