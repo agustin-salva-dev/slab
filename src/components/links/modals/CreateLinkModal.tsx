@@ -18,7 +18,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createLinkSchema, type CreateLinkInput } from "@/server/schemas/link";
 import { createLink } from "@/server/actions/links";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { LinkStatus } from "@prisma/client";
+import { type LinkStatus } from "@/types/link";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { LinkForm } from "../form/LinkForm";

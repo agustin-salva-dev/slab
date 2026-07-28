@@ -24,7 +24,7 @@ import {
 } from "lucide-react";
 import { Separator } from "@/components/ui/Separator";
 import { Callout, CalloutText } from "@/components/ui/Callout";
-import { LinkStatus } from "@prisma/client";
+import { $Enums } from "@/types/link";
 import type { getUserLinks } from "@/server/queries/links";
 
 type LinkCardProps = Awaited<ReturnType<typeof getUserLinks>>[number];
@@ -83,7 +83,7 @@ export function LinkCard({
         className={`w-full h-fit t-transform ${!isActive ? "opacity-35 grayscale" : ""}`}
       >
         <CardBody className="flex flex-col gap-y-2.5 sm:gap-y-3.5">
-          {status === LinkStatus.PENDING && (
+          {status === $Enums.LinkStatus.PENDING && (
             <Callout variant="warning">
               <BadgeQuestionMark size={20} />
               <CalloutText>
@@ -91,7 +91,7 @@ export function LinkCard({
               </CalloutText>
             </Callout>
           )}
-          {status === LinkStatus.DANGEROUS && (
+          {status === $Enums.LinkStatus.DANGEROUS && (
             <Callout variant="destructive">
               <BadgeAlert size={20} />
               <CalloutText>
