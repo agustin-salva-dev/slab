@@ -50,6 +50,7 @@ export default function Navbar() {
               variant="outline"
               subject="icon"
               size="xs"
+              aria-label="Open menu"
               className="cursor-pointer backdrop-blur-lg bg-white/1"
             >
               <Ellipsis />

@@ -10,10 +10,16 @@ export default async function RedirectPage({
 }) {
   const { slug } = await params;
 
-  const link = await db.link.findUnique({
-    where: { shortSlug: slug },
-    select: { id: true, originalUrl: true, isActive: true, expiresAt: true },
-  });
+  let link;
+  try {
+    link = await db.link.findUnique({
+      where: { shortSlug: slug },
+      select: { id: true, originalUrl: true, isActive: true, expiresAt: true },
+    });
+  } catch (error) {
+    console.error("[REDIRECT_DB_ERROR]", error);
+    notFound();
+  }
 
   if (
     !link ||
