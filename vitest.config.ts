@@ -1,9 +1,30 @@
 import { defineConfig } from "vitest/config";
 import react from "@vitejs/plugin-react";
 import path from "path";
-import dotenv from "dotenv";
+import fs from "fs";
 
-dotenv.config({ path: ".env.test" });
+// Cargar .env.test de forma nativa sin depender del paquete 'dotenv'
+try {
+  const envPath = path.resolve(__dirname, ".env.test");
+  if (fs.existsSync(envPath)) {
+    const envConfig = fs.readFileSync(envPath, "utf-8");
+    for (const line of envConfig.split("\n")) {
+      const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+      if (match) {
+        const key = match[1];
+        let value = match[2] || "";
+        if (value.startsWith('"') && value.endsWith('"')) {
+          value = value.slice(1, -1);
+        } else if (value.startsWith("'") && value.endsWith("'")) {
+          value = value.slice(1, -1);
+        }
+        process.env[key] = value.trim();
+      }
+    }
+  }
+} catch (e) {
+  console.error("No se pudo cargar .env.test de forma nativa:", e);
+}
 
 export default defineConfig({
   plugins: [react()],
