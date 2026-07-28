@@ -9,7 +9,7 @@
     "lint": "eslint",
     "test": "vitest",
     "test:run": "vitest run",
-    "test:integration": "dotenv -e .env.test -- vitest --fileParallelism=false",
+    "test:integration": "vitest --config vitest.integration.config.ts run",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui"
   },

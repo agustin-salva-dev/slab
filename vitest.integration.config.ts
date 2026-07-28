@@ -3,7 +3,6 @@ import react from "@vitejs/plugin-react";
 import path from "path";
 import fs from "fs";
 
-// Cargar .env.test de forma nativa sin depender del paquete 'dotenv'
 try {
   const envPath = path.resolve(__dirname, ".env.test");
   if (fs.existsSync(envPath)) {
@@ -33,7 +32,8 @@ export default defineConfig({
     globals: true,
     setupFiles: ["./src/__tests__/setup.ts"],
     fileParallelism: false,
-    exclude: ["**/node_modules/**", "**/e2e/**", "**/src/__tests__/integration/**"],
+    include: ["src/__tests__/integration/**/*.test.ts"],
+    exclude: ["**/node_modules/**", "**/e2e/**"],
   },
   resolve: {
     alias: {
