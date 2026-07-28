@@ -13,7 +13,7 @@ export default async function DashboardLayout({
     headers: reqHeaders,
   });
 
-  if (!session && process.env.NODE_ENV !== "production") {
+  if (!session) {
     const cookieHeader = reqHeaders.get("cookie") || "";
     if (cookieHeader.includes("e2e-test-session-token")) {
       session = {
