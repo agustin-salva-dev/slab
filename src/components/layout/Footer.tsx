@@ -15,7 +15,7 @@ import {
 import { Separator } from "@/components/ui/Separator";
 import { ExternalLink } from "@/components/ui/ExternalLink";
 
-const APP_VERSION = "v0.18.2";
+const APP_VERSION = "v1.0.0";
 
 export default function Footer() {
   const [activeIndex, setActiveIndex] = useState(0);
@@ -64,10 +64,8 @@ export default function Footer() {
       <div className="flex items-center gap-2.5">
         <Squircle className="fill-my-accents-yellow stroke-0 size-3 shrink-0" />
         <p className="truncate">
-          Status{" "}
-          <span className="font-normal text-my-secondary">
-            : In Development
-          </span>
+          Status
+          <span className="font-normal text-my-secondary">: Operational</span>
         </p>
       </div>
       <Separator orientation="vertical" className="h-5" />
