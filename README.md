@@ -88,54 +88,6 @@
 
 - 🎛️ **Optimistic UI:** SWR-powered instant mutations. Zero loading spinners, fluid experience.
 
-  <br />
-<!--
-//## 🛣️ The Slab Journey: From Concept to Reality.
-
-*Building Slab is an ongoing process of prioritizing performance and user experience. Here is the step-by-step evolution of the platform:*
-
-**📍 Phase 1: Foundation & Design**
-> *Establishing the brand identity and the technical roots.*
-- 🎨 **UI/UX System:** Designed the logo and Figma prototypes prioritizing interaction states.
-  
-- 🏗️ **Architecture:** Evaluated and selected a modern, highly scalable stack (Next.js 15, Prisma, Inngest).
-
-<br />
-
-**📍 Phase 2: Core Layout & Secure Access**
-> *Structuring the application and securing the doors.*
-- 🌐 **Global Layout:** Scaffolded the App Router, landing page, and dynamic CSS-variable themes.
-  
-- 🔐 **Better-Auth Integration:** Rolled out a premium, secure login flow supporting OAuth (GitHub/Google).
-
-<br />
-
-**📍 Phase 3: The Link Engine**
-> *The heart of Slab: making URL shortening instantaneous.*
-- ⚡ **Optimistic Link Generation:** 0ms perceived latency for creating and managing links via `SWR`.
-  
-- 📊 **Data Capture:** Built the background tracking system to capture geolocation, device, and browser data on every click.
-  
-<br />
-
-**📍 Phase 4: Scalability & Settings**
-> *Giving users absolute and secure control over their data.*
-- ⚙️ **Dashboard Hub:** Implemented persistent root layouts for seamless client-side routing.
-  
-- 🛡️ **Defensive Management:** Built strict Server Actions for profile updates, data exports, and multi-step account deletion.
-
----
--->
-
-### 🔮 What's Next? (Upcoming Features)
-*Slab is constantly evolving. Here is what is on the immediate horizon:*
-
-- 🔎 **Global Search Bar:** Instant search capabilities to easily find any generated link within the dashboard.
-  
-- 🏷️ **Smart Filters:** New UI controls to organize, sort, and filter links by status, creation date, and clicks.
-  
-- 📈 **Analytics Dashboard:** A dedicated, visual data-hub with charts and insights to analyze link performance and audience demographics.
-
 <br />
 
 ## 🚀 Getting Started
