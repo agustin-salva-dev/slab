@@ -2,15 +2,10 @@ import useSWR from "swr";
 import { getUserTags } from "@/server/queries/tags";
 import { TAGS_CACHE_KEY } from "./keys";
 
-interface TagItem {
-  id: string;
-  name: string;
-  color: string | null;
-  createdAt: Date;
-}
+import type { Tag } from "@/types/tag";
 
 export function useTags() {
-  const { data, error, isLoading } = useSWR<TagItem[]>(
+  const { data, error, isLoading } = useSWR<Tag[]>(
     TAGS_CACHE_KEY,
     async () => {
       const response = await getUserTags();

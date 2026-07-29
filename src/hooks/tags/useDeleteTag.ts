@@ -4,7 +4,7 @@ import { mutate } from "swr";
 import { deleteTag } from "@/server/actions/tags";
 import { TAGS_CACHE_KEY } from "./keys";
 import { useFilterStore } from "@/stores/useFilterStore";
-import type { Tag } from "@prisma/client";
+import type { Tag } from "@/types/tag";
 import type { LinkCardData } from "@/types/link";
 
 export function useDeleteTag() {
