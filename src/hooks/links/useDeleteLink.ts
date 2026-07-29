@@ -4,9 +4,7 @@ import { useState } from "react";
 import { useSWRConfig } from "swr";
 import { toast } from "sonner";
 import { deleteLink } from "@/server/actions/links";
-import type { getUserLinks } from "@/server/queries/links";
-
-type UserLinks = Awaited<ReturnType<typeof getUserLinks>>;
+import type { LinkCardData } from "@/types/link";
 
 export function useDeleteLink() {
   const { mutate } = useSWRConfig();
@@ -31,7 +29,7 @@ export function useDeleteLink() {
     });
 
     try {
-      await mutate<UserLinks>(
+      await mutate<LinkCardData[]>(
         "user-links",
         (currentLinks) => {
           if (!currentLinks) return [];
