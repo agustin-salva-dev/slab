@@ -4,7 +4,7 @@ import { auth } from "@/server/auth";
 import { headers } from "next/headers";
 import type { CreateTagInput, TagLinkInput } from "@/server/schemas/tags";
 import { db } from "@/server/db";
-import { Prisma } from "@prisma/client";
+import { isPrismaErrorWithCode } from "@/utils/prismaErrors";
 
 //* -- SHARED AUTH HELPER --
 async function getAuthenticatedSession() {
@@ -77,10 +77,7 @@ export const createTag = async (
 
     return { success: true, tagId: result.id };
   } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2002"
-    ) {
+    if (isPrismaErrorWithCode(error, "P2002")) {
       console.error(
         "[createTag] Unique constraint violated on tag name per user",
       );
@@ -204,10 +201,7 @@ export const attachTagToLink = async (
 
     return { success: true };
   } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2002"
-    ) {
+    if (isPrismaErrorWithCode(error, "P2002")) {
       return {
         success: false,
         errorCode: "CONFLICT",
@@ -264,10 +258,7 @@ export const detachTagFromLink = async (
 
     return { success: true };
   } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2025"
-    ) {
+    if (isPrismaErrorWithCode(error, "P2025")) {
       return {
         success: false,
         errorCode: "NOT_FOUND",
