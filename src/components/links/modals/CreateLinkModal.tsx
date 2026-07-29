@@ -2,10 +2,8 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
-import type { getUserLinks } from "@/server/queries/links";
 import { LINKS_CACHE_KEY } from "@/hooks/links/keys";
-
-type UserLinks = Awaited<ReturnType<typeof getUserLinks>>;
+import type { LinkCardData } from "@/types/link";
 import {
   Card,
   CardBody,
@@ -75,12 +73,12 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
       status: "PENDING" as LinkStatus,
       expiresAt: values.expiresAt || null,
       isActive: isFutureExpiration,
-      tags: optimisticTags as UserLinks[number]["tags"],
+      tags: optimisticTags as LinkCardData["tags"],
     };
 
     mutate(
       LINKS_CACHE_KEY,
-      (currentLinks: UserLinks | undefined) => {
+      (currentLinks: LinkCardData[] | undefined) => {
         return currentLinks
           ? [optimisticLink, ...currentLinks]
           : [optimisticLink];

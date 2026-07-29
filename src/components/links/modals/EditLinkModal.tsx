@@ -16,18 +16,14 @@ import {
 import { Button } from "@/components/ui/Button";
 import { editLink } from "@/server/actions/links";
 import { editLinkSchema, type EditLinkInput } from "@/server/schemas/link";
-import type { getUserLinks } from "@/server/queries/links";
+import type { LinkCardData } from "@/types/link";
 import { LINKS_CACHE_KEY } from "@/hooks/links/keys";
-
 import { useTags } from "@/hooks/tags/useTags";
-
-type UserLinks = Awaited<ReturnType<typeof getUserLinks>>;
-type UserLink = UserLinks[number];
 
 interface Props {
   isOpen: boolean;
   onClose: () => void;
-  link: UserLink;
+  link: LinkCardData;
 }
 
 import { LinkForm } from "../form/LinkForm";
@@ -78,7 +74,7 @@ export function EditLinkModal({ isOpen, onClose, link }: Props) {
 
     mutate(
       LINKS_CACHE_KEY,
-      (currentLinks: UserLinks | undefined) => {
+      (currentLinks: LinkCardData[] | undefined) => {
         if (!currentLinks) return [];
 
         const isFutureExpiration =

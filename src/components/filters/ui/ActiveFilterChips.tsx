@@ -21,7 +21,7 @@ export function ActiveFilterChips() {
       let color: string | null = null;
 
       if (section === "tags") {
-        const tag = tags.find((t) => t.id === value);
+        const tag = tags.find((t: { id: string; name: string; color: string | null }) => t.id === value);
         label = tag ? tag.name : isLoading ? "..." : "Tag";
         icon = Tag;
         color = tag?.color ?? null;
