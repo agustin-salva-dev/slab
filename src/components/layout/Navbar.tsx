@@ -27,9 +27,9 @@ export default function Navbar() {
       >
         <StarHalf className="text-(--color-my-accents-green)" size={24} />
         <p className="font-power-med text-white">
-          New:{" "}
+          Slab v1.0.0 is live:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            SearchBar enabled! Find links by title or description (Apr 11)
+            Now officially in production! Start shortening and tracking your links.
           </span>
         </p>
       </ExternalLink>
