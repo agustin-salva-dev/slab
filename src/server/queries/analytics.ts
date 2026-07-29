@@ -1,5 +1,6 @@
 // Analytics queries — consumed by Server Components only.
 // For Client Components, use the Server Action at @/server/actions/analytics.
+import "server-only";
 
 import { auth } from "@/server/auth";
 import { headers } from "next/headers";

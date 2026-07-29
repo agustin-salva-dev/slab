@@ -1,3 +1,4 @@
+import "server-only";
 import { Inngest, EventSchemas } from "inngest";
 
 import { SlabEvents } from "./events";

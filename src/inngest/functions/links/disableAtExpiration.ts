@@ -1,3 +1,4 @@
+import "server-only";
 import { inngest } from "../../client";
 import { LinksService } from "@/server/services/links";
 
