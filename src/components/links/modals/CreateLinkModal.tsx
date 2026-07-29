@@ -2,10 +2,8 @@
 
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
-import type { getUserLinks } from "@/server/queries/links";
 import { LINKS_CACHE_KEY } from "@/hooks/links/keys";
-
-type UserLinks = Awaited<ReturnType<typeof getUserLinks>>;
+import type { LinkCardData } from "@/types/link";
 import {
   Card,
   CardBody,
@@ -18,7 +16,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { createLinkSchema, type CreateLinkInput } from "@/server/schemas/link";
 import { createLink } from "@/server/actions/links";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
-import { LinkStatus } from "@prisma/client";
+import { type LinkStatus } from "@/types/link";
 import { toast } from "sonner";
 import { useSWRConfig } from "swr";
 import { LinkForm } from "../form/LinkForm";
@@ -75,12 +73,12 @@ export default function CreateLinkModal({ isOpen, onClose }: Props) {
       status: "PENDING" as LinkStatus,
       expiresAt: values.expiresAt || null,
       isActive: isFutureExpiration,
-      tags: optimisticTags as UserLinks[number]["tags"],
+      tags: optimisticTags as LinkCardData["tags"],
     };
 
     mutate(
       LINKS_CACHE_KEY,
-      (currentLinks: UserLinks | undefined) => {
+      (currentLinks: LinkCardData[] | undefined) => {
         return currentLinks
           ? [optimisticLink, ...currentLinks]
           : [optimisticLink];

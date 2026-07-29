@@ -1,6 +1,6 @@
+import "server-only";
 import { inngest } from "../../client";
 import { LinksService } from "@/server/services/links";
-import { Prisma } from "@prisma/client";
 
 export const disableAtExpiration = inngest.createFunction(
   {
@@ -21,9 +21,11 @@ export const disableAtExpiration = inngest.createFunction(
     await step.run("disable-expired-link", async () => {
       try {
         await LinksService.disableExpiredLink(event.data.linkId);
-      } catch (error) {
+      } catch (error: unknown) {
         if (
-          error instanceof Prisma.PrismaClientKnownRequestError &&
+          typeof error === "object" &&
+          error !== null &&
+          "code" in error &&
           error.code === "P2025"
         ) {
           console.log(

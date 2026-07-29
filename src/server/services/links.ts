@@ -1,3 +1,4 @@
+import "server-only";
 import { db } from "@/server/db";
 import { LinkStatus } from "@prisma/client";
 import type { CreateLinkInput, EditLinkInput } from "@/server/schemas/link";

@@ -4,7 +4,7 @@ import { mutate } from "swr";
 import { createTag } from "@/server/actions/tags";
 import type { CreateTagInput } from "@/server/schemas/tags";
 import { TAGS_CACHE_KEY } from "./keys";
-import type { Tag } from "@prisma/client";
+import type { Tag } from "@/types/tag";
 
 export function useCreateTag() {
   const [isCreating, setIsCreating] = useState(false);
@@ -20,7 +20,6 @@ export function useCreateTag() {
       id: tempId,
       name: values.name,
       color: values.color || null,
-      userId: "",
       createdAt: new Date(),
     };
 

@@ -1,12 +1,12 @@
 import { BadgeCheck, BadgeAlert, BadgeQuestionMark } from "lucide-react";
-import { LinkStatus } from "@prisma/client";
+import type { LinkStatus } from "@/types/link";
 
 interface LinkStatusIconProps {
   status: LinkStatus;
 }
 
 export function LinkStatusIcon({ status }: LinkStatusIconProps) {
-  if (status === LinkStatus.VERIFIED) {
+  if (status === "VERIFIED") {
     return (
       <BadgeCheck
         size={20}
@@ -16,7 +16,7 @@ export function LinkStatusIcon({ status }: LinkStatusIconProps) {
     );
   }
 
-  if (status === LinkStatus.DANGEROUS) {
+  if (status === "DANGEROUS") {
     return (
       <BadgeAlert size={20} strokeWidth={2.5} className="text-my-accents-red" />
     );

@@ -5,8 +5,8 @@ import { headers } from "next/headers";
 import type { CreateLinkInput, EditLinkInput } from "@/server/schemas/link";
 import { revalidatePath } from "next/cache";
 import { inngest } from "@/inngest/client";
-import { Prisma } from "@prisma/client";
 import { LinksService } from "@/server/services/links";
+import { isPrismaErrorWithCode } from "@/utils/prismaErrors";
 
 async function getAuthenticatedSession() {
   const reqHeaders = await headers();
@@ -98,11 +98,9 @@ export const createLink = async (
     revalidatePath("/dashboard");
     return { success: true, linkId: result.id };
   } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2002"
-    ) {
-      const field = (error.meta?.target as string[])?.join(", ") ?? "field";
+    if (isPrismaErrorWithCode(error, "P2002")) {
+      const err = error as { meta?: { target?: string[] } };
+      const field = err.meta?.target?.join(", ") ?? "field";
       console.error(`[createLink] Unique constraint violated on: ${field}`);
       return {
         success: false,
@@ -146,10 +144,7 @@ export const deleteLink = async (linkId: string): Promise<DeleteLinkResult> => {
     revalidatePath("/dashboard");
     return { success: true };
   } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2025"
-    ) {
+    if (isPrismaErrorWithCode(error, "P2025")) {
       console.log(
         `[PRISMA_DELETE_INFO] Link ${linkId} not found or not owned by user.`,
       );
@@ -223,10 +218,7 @@ export const editLink = async (
     revalidatePath("/dashboard");
     return { success: true };
   } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2002"
-    ) {
+    if (isPrismaErrorWithCode(error, "P2002")) {
       return {
         success: false,
         errorCode: "SLUG_CONFLICT",
@@ -267,10 +259,7 @@ export const toggleLinkStatus = async (
     revalidatePath("/dashboard");
     return { success: true };
   } catch (error) {
-    if (
-      error instanceof Prisma.PrismaClientKnownRequestError &&
-      error.code === "P2025"
-    ) {
+    if (isPrismaErrorWithCode(error, "P2025")) {
       console.log(
         `[PRISMA_TOGGLE_INFO] Link ${linkId} not found or not owned by user.`,
       );

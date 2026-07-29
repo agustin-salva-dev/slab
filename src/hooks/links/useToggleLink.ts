@@ -4,9 +4,7 @@ import { useState } from "react";
 import { useSWRConfig } from "swr";
 import { toast } from "sonner";
 import { toggleLinkStatus } from "@/server/actions/links";
-import type { getUserLinks } from "@/server/queries/links";
-
-type UserLinks = Awaited<ReturnType<typeof getUserLinks>>;
+import type { LinkCardData } from "@/types/link";
 
 export function useToggleLink() {
   const { mutate } = useSWRConfig();
@@ -37,7 +35,7 @@ export function useToggleLink() {
     });
 
     try {
-      await mutate<UserLinks>("user-links", undefined, {
+      await mutate<LinkCardData[]>("user-links", undefined, {
         optimisticData: (currentLinks) => {
           if (!currentLinks) return [];
           return currentLinks.map((link) =>

@@ -1,3 +1,4 @@
+import "server-only";
 import { inngest } from "../../client";
 import { db } from "@/server/db";
 

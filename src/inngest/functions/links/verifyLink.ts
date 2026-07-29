@@ -1,6 +1,6 @@
+import "server-only";
 import { inngest } from "../../client";
 import { db } from "@/server/db";
-import { LinkStatus } from "@prisma/client";
 
 export const verifyLink = inngest.createFunction(
   { id: "verify-link-safety", name: "Verify Link Safety" },
@@ -56,7 +56,7 @@ export const verifyLink = inngest.createFunction(
       await db.link.update({
         where: { id: linkId },
         data: {
-          status: isSafe ? LinkStatus.VERIFIED : LinkStatus.DANGEROUS,
+          status: isSafe ? "VERIFIED" : "DANGEROUS",
         },
       });
     });
@@ -64,7 +64,7 @@ export const verifyLink = inngest.createFunction(
     return {
       success: true,
       linkId,
-      status: isSafe ? LinkStatus.VERIFIED : LinkStatus.DANGEROUS,
+      status: isSafe ? "VERIFIED" : "DANGEROUS",
     };
   },
 );
