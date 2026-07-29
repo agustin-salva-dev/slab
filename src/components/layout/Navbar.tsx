@@ -27,9 +27,9 @@ export default function Navbar() {
       >
         <StarHalf className="text-(--color-my-accents-green)" size={24} />
         <p className="font-power-med text-white">
-          Slab v1.0.0 is live:{" "}
+          Slab is live:{" "}
           <span className="font-power-reg text-my-secondary text-shadow-xs">
-            Now officially in production! Start shortening and tracking your links.
+            Officially in production! Shorten and track your links.
           </span>
         </p>
       </ExternalLink>
