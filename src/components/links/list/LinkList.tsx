@@ -2,6 +2,7 @@
 
 import useSWR from "swr";
 import { LinkCard } from "../card/LinkCard";
+import type { LinkCardData } from "@/types/link";
 import { getUserLinks } from "@/server/queries/links";
 import { LinkCardSkeleton } from "../card/LinkCardSkeleton";
 import { EmptyLinkList } from "./EmptyLinkList";
@@ -10,14 +11,12 @@ import { useFilterStore } from "@/stores/useFilterStore";
 import { SearchX } from "lucide-react";
 import { Button } from "@/components/ui/Button";
 
-type UserLinks = Awaited<ReturnType<typeof getUserLinks>>;
-
 interface LinkListProps {
-  initialLinks: UserLinks;
+  initialLinks: LinkCardData[];
 }
 
 export function LinkList({ initialLinks }: LinkListProps) {
-  const { data: links } = useSWR("user-links", () => getUserLinks(), {
+  const { data: links } = useSWR<LinkCardData[]>("user-links", () => getUserLinks() as Promise<LinkCardData[]>, {
     fallbackData: initialLinks,
     refreshInterval: 30000,
     revalidateOnFocus: true,
